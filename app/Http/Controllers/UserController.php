@@ -147,4 +147,37 @@ public function aktivasiSemua()
 }
 
 
+public function kelolaAdmin()
+{
+    $users = \App\Models\User::where('role', 'admin')
+                ->whereNull('deleted_at')
+                ->get();
+
+    return view('user.kelola_admin_view', compact('users'));
+}
+
+public function createAdmin()
+{
+    return view('user.create_admin');
+}
+
+public function storeAdmin(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:8',
+    ]);
+
+    \App\Models\User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+        'role' => 'admin',
+        'isActive' => 1, // langsung aktif
+    ]);
+
+    return redirect()->route('user.kelolaAdmin')->with('success', 'Admin berhasil ditambahkan.');
+}
+
 }
