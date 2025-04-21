@@ -25,7 +25,9 @@
 
                     <div class="col-md-12">
 
-                        <table id="table_user" class="table table-bordered table-striped">
+                        <div class="table-responsive">
+
+                        <table id="table_user" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -69,6 +71,8 @@
                             </tbody>
 
                         </table>
+                    </div>
+
                         <br><br>
 
                     </div>

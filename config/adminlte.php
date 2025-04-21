@@ -300,14 +300,14 @@ return [
 
     'menu' => [
         // Navbar items:
-       
+
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
         // Sidebar items:
-        
+
         [
             'text' => 'blog',
             'url' => 'admin/blog',
@@ -329,30 +329,38 @@ return [
             'url' => 'rekap',
             'icon' => 'fas fa-fw fa-calendar',
         ],
-        
+
         [
             'text' => 'Pengaturan',
             'icon' => 'fas fa-fw fa-cog',
             'submenu' => [
                 [
                     'text' => 'Jam Presensi',
-                    'url' => '#',
+                    'url' => 'pengaturan-jam-absen',
                 ],
                 [
                     'text' => 'Hari Libur',
-                    'url' => '#',
+                    'url' => 'pengaturan-hari-libur',
                 ],
                 [
                     'text' => 'Lokasi Presensi',
-                    'url' => '#',
+                    'url' => 'pengaturan-lokasi',
                 ],
             ],
+            'can'  => ['isAdmin'],
         ],
         ['header' => 'CUTI'],
         [
             'text' => 'Validasi Cuti',
             'url' => 'rekap',
             'icon' => 'fas fa-fw fa-calendar-check',
+            'can'  => ['isAdmin'],
+        ],
+        [
+            'text' => 'Pengajuan Cuti',
+            'url' => 'rekap',
+            'icon' => 'fas fa-fw fa-calendar-check',
+            'can'  => ['isUser'],
         ],
         ['header' => 'PENGATURAN AKUN'],
         [
@@ -383,8 +391,8 @@ return [
             'icon' => 'fas fa-fw fa-user-shield',
             'can'  => ['isSuper'],
         ],
-       
-        
+
+
     ],
 
     /*
@@ -446,7 +454,7 @@ return [
                     'asset' => false,
                     'location' => '//cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js',
                 ],
-               
+
                 [
                     'type' => 'js',
                     'asset' => false,
@@ -479,7 +487,7 @@ return [
                 ],
             ],
         ],
-        
+
         'Select2' => [
             'active' => false,
             'files' => [
