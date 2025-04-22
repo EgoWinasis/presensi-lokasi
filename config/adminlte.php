@@ -323,6 +323,8 @@ return [
             'text' => 'Presensi',
             'url' => 'presensi',
             'icon' => 'fas fa-fw fa-fingerprint',
+            'can'  => ['isUser'],
+
         ],
         [
             'text' => 'Rekap',

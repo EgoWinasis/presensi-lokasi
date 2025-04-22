@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cuti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Mpdf\Mpdf;
 
 class PengajuanCutiController extends Controller
 {
@@ -124,11 +125,20 @@ class PengajuanCutiController extends Controller
      */
     public function print($id)
     {
-        $cuti = Cuti::findOrFail($id);
+        // Retrieve the Cuti record with the given ID
+        $cuti = Cuti::with('user')->findOrFail($id);  // Adjust to your model's structure
 
-        // Generate a printable version, you can use DomPDF or a simple view for now
-        // Return a view to display the printable leave request
-        return view('cuti.print', compact('cuti'));
+        // Load your view with the Cuti data (use a Blade template)
+        $pdfContent = view('cuti.print', compact('cuti'))->render();
+
+        // Create a new instance of mPDF
+        $mpdf = new \Mpdf\Mpdf();
+
+        // Write HTML to the PDF
+        $mpdf->WriteHTML($pdfContent);
+
+        // Output the PDF directly to the browser (you can also save it to a file)
+        return $mpdf->Output('cuti-details.pdf', 'I');  // 'I' means inline (open in the browser)
     }
 
     public function getItemDetails($id)

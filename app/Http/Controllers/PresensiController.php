@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Lokasi;
 use App\Models\Holiday;
 use App\Models\JamAbsen;
+use Carbon\Carbon;
 
 class PresensiController extends Controller
 {
@@ -66,54 +67,96 @@ class PresensiController extends Controller
     {
         // Validate the incoming request data
         $validated = $request->validate([
-            'tgl' => 'required|date',
-            'jam_masuk' => 'required|date_format:H:i',
-            'foto_masuk' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'lokasi_masuk' => 'required|array',
-            'lokasi_masuk.lat' => 'required|numeric',
-            'lokasi_masuk.lng' => 'required|numeric',
-            'ket_masuk' => 'nullable|string',
-            'jam_keluar' => 'required|date_format:H:i',
-            'foto_keluar' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'lokasi_keluar' => 'required|array',
-            'lokasi_keluar.lat' => 'required|numeric',
-            'lokasi_keluar.lng' => 'required|numeric',
-            'ket_keluar' => 'nullable|string',
+            'action_type' => 'required|in:masuk,pulang',
+            'captured_image' => 'required|string', // Base64 encoded image
+            'user_time' => 'required|date',
+            'user_id' => 'required|exists:users,id',
+            'lokasi' => 'required|string'
         ]);
 
-        // Handle Foto Masuk upload
-        if ($request->hasFile('foto_masuk')) {
-            $fotoMasukPath = $request->file('foto_masuk')->store('public/fotos');
-            $fotoMasukName = basename($fotoMasukPath);
+        // Handle the image upload (Base64 to file)
+        $imageData = $validated['captured_image'];
+        $image = str_replace('data:image/png;base64,', '', $imageData);
+        $image = str_replace(' ', '+', $image);
+        $imageName = 'presensi_' . uniqid() . '.png';
+        Storage::disk('public')->put('presensi_images/' . $imageName, base64_decode($image));
+
+        $lokasiString = $validated['lokasi'];
+
+        $jamAbsen = JamAbsen::first(); // Assuming this fetches the record with your threshold times
+
+        if ($jamAbsen) {
+            // Define threshold times based on the fetched values from the JamAbsen table
+            $thresholdMasuk = Carbon::createFromFormat('H:i:s', $jamAbsen->jam_masuk); // Clock-in time
+            $thresholdPulang = Carbon::createFromFormat('H:i:s', $jamAbsen->jam_keluar); // Clock-out time
         } else {
-            $fotoMasukName = null;
+            // Set default times if no record is found (fallback behavior)
+            $thresholdMasuk = Carbon::createFromFormat('H:i:s', '08:00:00'); // Default 08:00 AM
+            $thresholdPulang = Carbon::createFromFormat('H:i:s', '17:00:00'); // Default 05:00 PM
         }
 
-        // Handle Foto Keluar upload
-        if ($request->hasFile('foto_keluar')) {
-            $fotoKeluarPath = $request->file('foto_keluar')->store('public/fotos');
-            $fotoKeluarName = basename($fotoKeluarPath);
+        $dateOnly = Carbon::parse($validated['user_time'])->format('Y-m-d');
+
+        // Check if the user already has a 'masuk' record for today
+        $presensiToday = Presensi::where('user_id', $validated['user_id'])
+                                 ->where('tgl', $dateOnly)
+                                 ->first();
+
+        // Create or update the presensi record based on action type
+        if (!$presensiToday) {
+            // If no 'masuk' record exists, create a new one
+            $presensiData = [
+                'user_id' => $validated['user_id'],
+                'tgl' => $dateOnly,
+                'jam_masuk' => null,
+                'foto_masuk' => null,
+                'lokasi_masuk' => null,
+                'ket_masuk' => null,
+                'jam_keluar' => null,
+                'foto_keluar' => null,
+                'lokasi_keluar' => null,
+                'ket_keluar' => null,
+            ];
         } else {
-            $fotoKeluarName = null;
+            // If there's an existing 'masuk' record, just update it based on action type
+            $presensiData = $presensiToday->toArray();
         }
 
-        // Store the presensi record in the database
-        Presensi::create([
-            'user_id' => Auth::id(),
-            'tgl' => $validated['tgl'],
-            'jam_masuk' => $validated['jam_masuk'],
-            'foto_masuk' => $fotoMasukName,
-            'lokasi_masuk' => json_encode($validated['lokasi_masuk']),
-            'ket_masuk' => $validated['ket_masuk'] ?? null,
-            'jam_keluar' => $validated['jam_keluar'],
-            'foto_keluar' => $fotoKeluarName,
-            'lokasi_keluar' => json_encode($validated['lokasi_keluar']),
-            'ket_keluar' => $validated['ket_keluar'] ?? null,
-        ]);
+        if ($validated['action_type'] === 'masuk') {
+            $presensiData['jam_masuk'] = Carbon::parse($validated['user_time'])->format('H:i');
+            $presensiData['foto_masuk'] = $imageName;
+            $presensiData['lokasi_masuk'] = $lokasiString;
+            if (Carbon::parse($presensiData['jam_masuk'])->greaterThan($thresholdMasuk)) {
+                $presensiData['ket_masuk'] = 'Telat';
+            } else {
+                $presensiData['ket_masuk'] = 'Tepat Waktu';
+            }
+            // If no existing record, insert new
+            if (!$presensiToday) {
+                Presensi::create($presensiData);
+            } else {
+                // If record exists, just update
+                $presensiToday->update($presensiData);
+            }
+        } elseif ($validated['action_type'] === 'pulang' && $presensiToday) {
+            // Update the 'pulang' time
+            $presensiData['jam_keluar'] = Carbon::parse($validated['user_time'])->format('H:i');
+            $presensiData['foto_keluar'] = $imageName;
+            $presensiData['lokasi_keluar'] = $lokasiString;
+            if (Carbon::parse($presensiData['jam_keluar'])->lessThan($thresholdPulang)) {
+                $presensiData['ket_keluar'] = 'Pulang Cepat';
+            } else {
+                $presensiData['ket_keluar'] = 'Tepat Waktu';
+            }
 
-        // Redirect back to the presensi index with a success message
-        return redirect()->route('presensi.index')->with('success', 'Presensi berhasil ditambahkan.');
+            // Update the existing 'pulang' record
+            $presensiToday->update($presensiData);
+        }
+
+        // Return a response
+        return response()->json(['success' => true, 'message' => 'Presensi berhasil disimpan']);
     }
+
 
     /**
      * Display the specified resource.

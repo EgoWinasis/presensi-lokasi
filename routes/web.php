@@ -8,6 +8,7 @@ use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\PengajuanCutiController;
 use App\Http\Controllers\ValidasiCutiController;
+use App\Http\Controllers\RekapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,4 +110,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/cuti/validate/superadmin/{id}', [ValidasiCutiController::class, 'validateBySuperadmin'])->name('cuti.validateBySuperadmin');
 
     Route::resource('validasi-cuti', ValidasiCutiController::class);
+
+
+    // rekap
+    Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
 });

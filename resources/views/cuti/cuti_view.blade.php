@@ -99,7 +99,7 @@
                                     
                                         <!-- Button to Print (Visible only when both statuses are 'disetujui') -->
                                         @if($item->status_admin == 'disetujui' && $item->status_superadmin == 'disetujui')
-                                            <a href="{{ route('cuti.print', $item->id) }}" class="btn btn-info btn-sm m-1">
+                                            <a href="{{ route('cuti.print', $item->id) }}" target="_blank" class="btn btn-info btn-sm m-1">
                                                 <i class="fas fa-print"></i> 
                                             </a>
                                         @endif
