@@ -6,6 +6,8 @@ use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\PengajuanCutiController;
+use App\Http\Controllers\ValidasiCutiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,4 +83,30 @@ Route::middleware('auth')->group(function () {
     Route::post('/presensi', [PresensiController::class, 'store'])->name('presensi.store');
     Route::delete('/presensi/{id}', [PresensiController::class, 'destroy'])->name('presensi.destroy');
 
+    // cuti
+    Route::get('/cuti', [PengajuanCutiController::class, 'index'])->name('cuti.index');
+    Route::get('/cuti/create', [PengajuanCutiController::class, 'create'])->name('cuti.create');
+    Route::post('/cuti', [PengajuanCutiController::class, 'store'])->name('cuti.store');
+
+    /// Route to show the form for editing a specific leave request
+    Route::get('cuti/{id}/edit', [PengajuanCutiController::class, 'edit'])->name('cuti.edit');
+
+    // Route to update the specific leave request
+    Route::put('cuti/{id}', [PengajuanCutiController::class, 'update'])->name('cuti.update');
+
+    // Route to delete the specific leave request
+    Route::delete('cuti/{id}', [PengajuanCutiController::class, 'destroy'])->name('cuti.destroy');
+
+    // Route to print the specific leave request
+    Route::get('cuti/{id}/print', [PengajuanCutiController::class, 'print'])->name('cuti.print');
+
+    Route::get('/cuti/details/{id}', [PengajuanCutiController::class, 'getItemDetails'])->name('cuti.details');
+
+    // Route untuk validasi cuti oleh admin
+    Route::post('/cuti/validate/admin/{id}', [ValidasiCutiController::class, 'validateByAdmin'])->name('cuti.validateByAdmin');
+
+    // Route untuk validasi cuti oleh superadmin
+    Route::post('/cuti/validate/superadmin/{id}', [ValidasiCutiController::class, 'validateBySuperadmin'])->name('cuti.validateBySuperadmin');
+
+    Route::resource('validasi-cuti', ValidasiCutiController::class);
 });

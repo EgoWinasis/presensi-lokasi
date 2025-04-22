@@ -352,13 +352,13 @@ return [
         ['header' => 'CUTI'],
         [
             'text' => 'Validasi Cuti',
-            'url' => 'rekap',
+            'url' => 'validasi-cuti',
             'icon' => 'fas fa-fw fa-calendar-check',
-            'can'  => ['isAdmin'],
+            'can'  => ['isAdmin', 'isSuper'],
         ],
         [
             'text' => 'Pengajuan Cuti',
-            'url' => 'rekap',
+            'url' => 'cuti',
             'icon' => 'fas fa-fw fa-calendar-check',
             'can'  => ['isUser'],
         ],

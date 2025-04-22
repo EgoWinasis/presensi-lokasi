@@ -10,7 +10,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -51,4 +54,19 @@ class User extends Authenticatable
         'notification_email' => 'boolean',
         'notification_web' => 'boolean',
     ];
+
+    public function isSuper()
+    {
+        return $this->role == 'superadmin'; // Adjust the value if you use a different name for superadmin
+    }
+
+    /**
+     * Check if the user is an Admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->role == 'admin'; // Adjust the value if you use a different name for admin
+    }
 }
