@@ -45,20 +45,45 @@
                             <strong>Today is a holiday!</strong> You cannot mark your attendance today.
                         </div>
                         @else
+                        @if ($presensiToday === null)
                         <div class="mt-4">
                             <!-- Disable Masuk button if current time is before jam_masuk -->
-                            <button id="btnMasuk" class="btn btn-success w-100" @if($canMasuk || $presensiToday)
-                                disabled @endif>
+                            <button id="btnMasuk" class="btn btn-success w-100">
                                 <i class="fas fa-sign-in-alt"></i> Masuk
                             </button>
                         </div>
                         <div class="mt-4">
                             <!-- Disable Pulang button if current time is after jam_pulang or if user hasn't marked Masuk -->
-                            <button id="btnPulang" class="btn btn-danger w-100" @if($canPulang || ($presensiToday->jam_pulang != '-'))
-                                disabled @endif>
-                                <i class="fas fa-sign-out-alt"></i> Pulang
-                            </button>
-                        </div>
+                            <button id="btnPulang" class="btn btn-danger w-100" 
+                            disabled>
+                            <i class="fas fa-sign-out-alt"></i> Pulang
+                        </button>
+                    </div>
+                    @else     
+                    <div class="mt-4">
+                        <!-- Disable Masuk button if current time is before jam_masuk -->
+                        <button id="btnMasuk" class="btn btn-success w-100" disabled>
+                            <i class="fas fa-sign-in-alt"></i> Masuk
+                        </button>
+                    </div>
+                    @if ($presensiToday->jam_keluar !== '-')
+                        
+                    <div class="mt-4">
+                        <!-- Disable Pulang button if current time is after jam_pulang or if user hasn't marked Masuk -->
+                        <button id="btnPulang" class="btn btn-danger w-100" disabled>
+                            <i class="fas fa-sign-out-alt"></i> Pulang
+                        </button>
+                    </div>
+                    @else
+                        
+                    <div class="mt-4">
+                        <!-- Disable Pulang button if current time is after jam_pulang or if user hasn't marked Masuk -->
+                        <button id="btnPulang" class="btn btn-danger w-100">
+                            <i class="fas fa-sign-out-alt"></i> Pulang
+                        </button>
+                    </div>
+                    @endif
+                        @endif
                         @endif
 
                         <div class="mt-4">
@@ -425,20 +450,28 @@ var longitude;
         // Handle capture button click
         captureBtn.addEventListener("click", function () {
             captureImage();
-            const currentTime = new Date().toISOString(); // Get the current time
+            const currentTime = new Date();
+            const currentTimeString = currentTime.toLocaleTimeString('en-GB', { 
+    timeZone: 'Asia/Jakarta', 
+    hour12: false, 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit' 
+});
            
 
 
             const formData = new FormData();
             formData.append('action_type', actionType);
             formData.append('captured_image', canvas.toDataURL("image/png"));
-            formData.append('user_time', currentTime); // Add current time
+            formData.append('user_time', currentTimeString); // Add current time
             formData.append('user_id', {{Auth::id()}}); // User ID from Blade template
 
             const lokasiString = `lat: ${latitude}, lng: ${longitude}`;
             formData.append('lokasi', lokasiString);  // Just a plain string
 
-    
+            
+            
             // Send AJAX request to store presensi
             fetch('/presensi', {
                     method: 'POST',

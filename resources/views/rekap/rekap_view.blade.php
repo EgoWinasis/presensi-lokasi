@@ -32,24 +32,29 @@
                         <table id="table_user" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Tanggal</th>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">Tanggal</th>
                                     @if (Auth::user()->role != 'user')
                                     <th>Nama</th>
                                     @endif
-                                    <th>Jam Masuk</th>
-                                    <th>Foto Masuk</th>
-                                    <th>Lokasi Masuk</th>
-                                    <th>Keterangan Masuk</th>
-                                    <th>Jam Keluar</th>
-                                    <th>Foto Keluar</th>
-                                    <th>Lokasi Keluar</th>
-                                    <th>Keterangan Keluar</th>
+                                    <th class="text-center">Jam Masuk</th>
+                                    <th class="text-center">Foto Masuk</th>
+                                    <th class="text-center">Lokasi Masuk</th>
+                                    <th class="text-center">Keterangan Masuk</th>
+                                    <th class="text-center">Jam Keluar</th>
+                                    <th class="text-center">Foto Keluar</th>
+                                    <th class="text-center">Lokasi Keluar</th>
+                                    <th class="text-center">Keterangan Keluar</th>
                                 </tr>
                             </thead>
                           
                             <tbody>
+                                @php
+                                    $no = 1;
+                                @endphp
                                 @foreach ($presensi as $item)
                                 <tr>
+                                    <td class="text-center">{{ $no++ }}</td>
                                     <td class="text-center">{{ \Carbon\Carbon::parse($item->tgl)->format('d-m-Y') }}</td>
                                     @if (Auth::user()->role != 'user')
                                     <td class="text-center">{{ $item->user->name ?? '-' }}</td>
@@ -173,7 +178,7 @@
             "paging": true,
             "lengthChange": false,
             "searching": true,
-            "ordering": true,
+            "ordering": false,
             "info": true,
             "autoWidth": true,
             "responsive": true,

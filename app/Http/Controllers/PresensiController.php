@@ -39,15 +39,11 @@ class PresensiController extends Controller
                                  ->whereDate('tgl', $today) // Filter by today's date
                                  ->first(); // Get the first record
 
-        // Get the current time
-        $currentTime = now();
 
-        // Check if it's before 'jam_masuk' or after 'jam_pulang'
-        $canMasuk = $currentTime->lt($jamAbsen->jam_masuk); // true if before jam_masuk
-        $canPulang = $currentTime->gt($jamAbsen->jam_pulang); // true if after jam_pulang
+
 
         // Return the data to the view
-        return view('presensi.presensi', compact('lokasi', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday', 'canMasuk', 'canPulang'));
+        return view('presensi.presensi', compact('lokasi', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday'));
     }
 
 
@@ -69,7 +65,7 @@ class PresensiController extends Controller
         $validated = $request->validate([
             'action_type' => 'required|in:masuk,pulang',
             'captured_image' => 'required|string', // Base64 encoded image
-            'user_time' => 'required|date',
+            'user_time' => ['required', 'regex:/^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/'],
             'user_id' => 'required|exists:users,id',
             'lokasi' => 'required|string'
         ]);
@@ -123,7 +119,7 @@ class PresensiController extends Controller
         }
 
         if ($validated['action_type'] === 'masuk') {
-            $presensiData['jam_masuk'] = Carbon::parse($validated['user_time'])->format('H:i');
+            $presensiData['jam_masuk'] = $validated['user_time'];
             $presensiData['foto_masuk'] = $imageName;
             $presensiData['lokasi_masuk'] = $lokasiString;
             if (Carbon::parse($presensiData['jam_masuk'])->greaterThan($thresholdMasuk)) {
@@ -140,7 +136,7 @@ class PresensiController extends Controller
             }
         } elseif ($validated['action_type'] === 'pulang' && $presensiToday) {
             // Update the 'pulang' time
-            $presensiData['jam_keluar'] = Carbon::parse($validated['user_time'])->format('H:i');
+            $presensiData['jam_keluar'] = $validated['user_time'];
             $presensiData['foto_keluar'] = $imageName;
             $presensiData['lokasi_keluar'] = $lokasiString;
             if (Carbon::parse($presensiData['jam_keluar'])->lessThan($thresholdPulang)) {

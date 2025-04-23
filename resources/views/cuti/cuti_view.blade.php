@@ -30,7 +30,7 @@
                         <table id="table_user" class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="text-center">ID</th>
+                                    <th class="text-center">No</th>
                                     <th class="text-center">Nama Karyawan</th>
                                     <th class="text-center">Tanggal Mulai Cuti</th>
                                     <th class="text-center">Tanggal Selesai Cuti</th>
@@ -143,7 +143,7 @@
             "paging": true,
             "lengthChange": false,
             "searching": true,
-            "ordering": true,
+            "ordering": false,
             "info": true,
             "autoWidth": true,
             "responsive": true,

@@ -8,8 +8,8 @@
 
 @section('content')
     <!-- Check if the logged-in user is not a 'user' role -->
-    @if(Auth::user()->role !== 'user')
-        <div class="row">
+    <div class="row">
+            @if(Auth::user()->role !== 'user')
             <!-- Total Users Card -->
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
@@ -35,13 +35,38 @@
                     </div>
                 </div>
             </div>
+            @else
+            <!-- Total Leave Applications Card -->      
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ $pengajuanCuti }}</h3>
+                        <p>Total Pengajuan Cuti</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                </div>
+                </div>
+            @endif
 
             <!-- Pending Leave Applications Card -->
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>{{ $pendingCount }}</h3>
-                        <p>Pengajuan Cuti Menunggu</p>
+                        <p>Pengajuan Cuti Menunggu Admin</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ $pendingCountSuper }}</h3>
+                        <p>Pengajuan Cuti Menunggu Super Admin</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-clock"></i>
@@ -80,7 +105,18 @@
                 <div class="small-box bg-danger">
                     <div class="inner">
                         <h3>{{ $rejectedCount }}</h3>
-                        <p>Ditolak</p>
+                        <p>Ditolak Admin</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ $rejectedCountSuper }}</h3>
+                        <p>Ditolak Super Admin</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-times-circle"></i>
@@ -88,7 +124,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    
 @stop
 
 @section('footer')
@@ -101,7 +137,7 @@
     <script>
         $(document).ready(function() {
             Swal.fire({
-                icon: 'info',
+                type: 'info',
                 title: 'Info',
                 html: 'Selamat Datang'
             });

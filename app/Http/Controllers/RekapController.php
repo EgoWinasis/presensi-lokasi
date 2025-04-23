@@ -40,7 +40,7 @@ class RekapController extends Controller
         }
 
         // Get the presensi records
-        $presensi = $presensiQuery->get();
+        $presensi = $presensiQuery->orderBy('created_at', 'desc')->get();
 
         // Pass the data to the view
         return view('rekap.rekap_view', compact('presensi', 'month', 'startDate', 'endDate'));
