@@ -79,27 +79,32 @@ class ProfileController extends Controller
 
 
         if ($request->file('foto')) {
-            // Delete old file if necessary
+            // Delete the old file if it's not the default image (user.png)
             if ($user['foto'] != 'user.png') {
-                $oldFilePath = public_path('storage/images/profile/' . $user['foto']);
-                if (File::exists($oldFilePath)) {
-                    File::delete($oldFilePath);  // Delete old image
+                // Absolute path to the old file in public_html/storage/images/profile
+                $oldFilePath = base_path('../public_html/storage/images/profile/' . $user['foto']);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);  // Delete old image
                 }
             }
 
             // Get the uploaded file
             $file = $request->file('foto');
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension(); // Generate unique file name
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension(); // Generate a unique file name
 
-            // Move the file to public_html/storage/images/profile
-            $file->move(public_path('storage/images/profile'), $fileName);
+            // Absolute path to public_html/storage/images/profile folder
+            $destinationPath = base_path('../public_html/storage/images/profile');  // Adjust path to your project structure
+
+            // Move the file to the specified folder
+            $file->move($destinationPath, $fileName);
 
             // Save the new file name in the database
             $validatedData['foto'] = $fileName;
         } else {
-            // Keep the existing file if no new file is uploaded
+            // If no file is uploaded, keep the existing image
             $validatedData['foto'] = $user['foto'];
         }
+
 
 
 
