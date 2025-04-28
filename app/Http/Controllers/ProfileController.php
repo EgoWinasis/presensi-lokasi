@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
@@ -21,7 +21,7 @@ class ProfileController extends Controller
     public function index()
     {
         $profile = DB::table('users')
-            ->select('id','nik', 'name', 'email', 'role', 'foto')
+            ->select('id', 'nik', 'name', 'email', 'role', 'foto')
             ->where('id', '=', Auth::user()->id)
             ->get();
         return view('profile.profile_view')->with(compact('profile'));
@@ -77,19 +77,30 @@ class ProfileController extends Controller
             // ttd
         ]);
 
-        
+
         if ($request->file('foto')) {
+            // Delete the old file if it's not the default placeholder image
             if ($user['foto'] != 'user.png') {
-                Storage::delete('public/images/profile/' . $user['foto']);
+                $oldFilePath = public_path('storage/images/profile/' . $user['foto']);
+                if (File::exists($oldFilePath)) {
+                    File::delete($oldFilePath);  // Delete the old image
+                }
             }
+
+            // Get the uploaded file
             $file = $request->file('foto');
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-            $request->file('foto')->storeAs('public/images/profile/', $fileName);
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension(); // Generate unique file name
+
+            // Move the uploaded file to the public directory (directly into public/images/profile)
+            $file->move(public_path('storage/images/profile'), $fileName);
+
+            // Save the new file name in the database (or whatever you need to do with it)
             $validatedData['foto'] = $fileName;
         } else {
+            // If no file was uploaded, keep the existing photo
             $validatedData['foto'] = $user['foto'];
         }
-        
+
 
         User::where('id', $id)->update($validatedData);
         return redirect()->route('profile.index')
