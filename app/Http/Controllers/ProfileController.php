@@ -79,11 +79,11 @@ class ProfileController extends Controller
 
 
         if ($request->file('foto')) {
-            // Delete the old file if it's not the default placeholder image
+            // Delete old file if necessary
             if ($user['foto'] != 'user.png') {
                 $oldFilePath = public_path('storage/images/profile/' . $user['foto']);
                 if (File::exists($oldFilePath)) {
-                    File::delete($oldFilePath);  // Delete the old image
+                    File::delete($oldFilePath);  // Delete old image
                 }
             }
 
@@ -91,15 +91,17 @@ class ProfileController extends Controller
             $file = $request->file('foto');
             $fileName = uniqid() . '.' . $file->getClientOriginalExtension(); // Generate unique file name
 
-            // Move the uploaded file to the public directory (directly into public/images/profile)
+            // Move the file to public_html/storage/images/profile
             $file->move(public_path('storage/images/profile'), $fileName);
 
-            // Save the new file name in the database (or whatever you need to do with it)
+            // Save the new file name in the database
             $validatedData['foto'] = $fileName;
         } else {
-            // If no file was uploaded, keep the existing photo
+            // Keep the existing file if no new file is uploaded
             $validatedData['foto'] = $user['foto'];
         }
+
+
 
 
         User::where('id', $id)->update($validatedData);
