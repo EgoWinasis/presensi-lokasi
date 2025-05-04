@@ -6,7 +6,7 @@ use App\Models\Presensi;  // Assuming you have a Presensi model for attendance d
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 class RekapController extends Controller
 {
     public function index(Request $request)
