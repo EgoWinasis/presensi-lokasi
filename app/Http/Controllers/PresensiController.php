@@ -122,7 +122,9 @@ class PresensiController extends Controller
             $presensiData['jam_masuk'] = $validated['user_time'];
             $presensiData['foto_masuk'] = $imageName;
             $presensiData['lokasi_masuk'] = $lokasiString;
-            if (Carbon::parse($presensiData['jam_masuk'])->greaterThan($thresholdMasuk)) {
+            $toleransi = Carbon::parse($thresholdMasuk)->addMinutes(30);
+
+            if (Carbon::parse($presensiData['jam_masuk'])->greaterThan($toleransi)) {
                 $presensiData['ket_masuk'] = 'Telat';
             } else {
                 $presensiData['ket_masuk'] = 'Tepat Waktu';

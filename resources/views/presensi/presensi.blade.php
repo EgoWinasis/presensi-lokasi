@@ -42,7 +42,7 @@
                         <!-- Buttons for Presensi -->
                         @if ($isHoliday)
                         <div class="alert alert-warning">
-                            <strong>Today is a holiday!</strong> You cannot mark your attendance today.
+                            <strong>Hari ini Hari Libur!</strong> Anda tidak bisa melakukan presensi hari ini.
                         </div>
                         @else
                         @if ($presensiToday === null)
@@ -215,13 +215,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="cameraModalLabel">Capture Image</h5>
+                <h5 class="modal-title" id="cameraModalLabel">Ambil Gambar</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Camera container -->
                 <video id="video" width="100%" height="auto" autoplay></video>
-                <button id="captureBtn" class="btn btn-primary mt-3">Capture</button>
+                <button id="captureBtn" class="btn btn-primary mt-3">Ambil</button>
                 <canvas id="canvas" style="display: none;"></canvas>
 
                 <!-- Image preview of captured photo -->
