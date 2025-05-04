@@ -330,6 +330,16 @@ return [
             'text' => 'Rekap',
             'url' => 'rekap',
             'icon' => 'fas fa-fw fa-calendar',
+            'submenu' => [
+                [
+                    'text' => 'Presensi',
+                    'url' => 'rekap',
+                ],
+                [
+                    'text' => 'Cuti / Izin',
+                    'url' => 'rekap-cuti',
+                ]
+            ],
         ],
 
         [
