@@ -24,7 +24,21 @@
                             <input type="date" name="start_date" id="start_date" class="form-control" value="{{ request('start_date') }}">
                             <span class="mx-2">-</span>
                             <input type="date" name="end_date" id="end_date" class="form-control" value="{{ request('end_date') }}">
+                            @auth
+                                @if(auth()->user()->role !== 'user')
+                                    <select name="user_id" class="form-control mx-2">
+                                        <option value="">Semua Karyawan</option>
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @endif
+                            @endauth
+                        
                             <button type="submit" class="btn btn-primary ml-2">Filter</button>
+                            <a href="{{ route('rekap.index') }}" class="btn btn-secondary ml-2">Reset</a>
                         </form>
                         
                         <div class="table-responsive">
