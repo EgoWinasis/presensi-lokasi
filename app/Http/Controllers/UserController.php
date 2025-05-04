@@ -26,7 +26,7 @@ class UserController extends Controller
                 return redirect()->route('login')->with('error', 'Akses Ditolak ');
             }
         $users = DB::table('users')
-            ->select('id', 'name', 'email', 'role', 'foto', 'isActive')
+            ->select('*')
             ->where('role', '=', 'user')
             ->whereNull('deleted_at')
             ->orderBy('id')

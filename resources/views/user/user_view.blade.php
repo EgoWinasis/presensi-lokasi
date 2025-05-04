@@ -32,6 +32,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
+                                    <th>Jabatan</th>
+                                    <th>HP</th>
+                                    <th>Status Karyawan</th>
                                     <th>Email</th>
                                     <th>Peran</th>
                                     <th>Foto</th>
@@ -47,6 +50,9 @@
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td class="nama">{{ $user->name }}</td>
+                                    <td >{{ $user->jabatan }}</td>
+                                    <td >{{ $user->hp }}</td>
+                                    <td >{{ $user->status_karyawan }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td class="text-center">
                                         @if ($user->isActive == 0)
