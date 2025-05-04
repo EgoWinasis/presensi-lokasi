@@ -43,10 +43,17 @@
                                     value="{{old('name') ? old('name') : $profile[0]->name }}" />
                                 <x-adminlte-input name="jabatan" label="Jabatan" placeholder="Jabatan"
                                     value="{{old('jabatan') ? old('jabatan') : $profile[0]->jabatan }}" />
-                                <x-adminlte-input name="hp" label="No. HP" placeholder="No. HP"
+                                <x-adminlte-input name="hp" oninput="this.value = this.value.replace(/[^0-9]/g, '')" label="No. HP" placeholder="No. HP"
                                     value="{{old('hp') ? old('hp') : $profile[0]->hp }}" />
-                                <x-adminlte-input name="status_karyawan" label="Status Karyawan" placeholder="Status Karyawan"
-                                    value="{{old('status_karyawan') ? old('status_karyawan') : $profile[0]->status_karyawan }}" />
+                                    <x-adminlte-select name="status_karyawan" label="Status Karyawan">
+                                        <option value="Karyawan Kontrak" {{ (old('status_karyawan') ?? $profile[0]->status_karyawan) == 'Karyawan Kontrak' ? 'selected' : '' }}>
+                                            Karyawan Kontrak
+                                        </option>
+                                        <option value="Karyawan Tetap" {{ (old('status_karyawan') ?? $profile[0]->status_karyawan) == 'Karyawan Tetap' ? 'selected' : '' }}>
+                                            Karyawan Tetap
+                                        </option>
+                                    </x-adminlte-select>
+                                    
                                 <x-adminlte-input type="email" name="email" readonly label="Email" placeholder="Email"
                                     value="{{old('email') ? old('email') : $profile[0]->email }}" />
                                
