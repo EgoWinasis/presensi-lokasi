@@ -21,7 +21,7 @@ class ProfileController extends Controller
     public function index()
     {
         $profile = DB::table('users')
-            ->select('id', 'nik', 'name', 'email', 'role', 'foto')
+            ->select('*')
             ->where('id', '=', Auth::user()->id)
             ->get();
         return view('profile.profile_view')->with(compact('profile'));
