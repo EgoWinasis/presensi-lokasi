@@ -28,6 +28,13 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        if ($user->isActive == 0) {
+            Auth::logout();
+    
+            return redirect()->route('login')->withErrors([
+                'email' => 'Akun belum diaktivasi.',
+            ]);
+        }
 
         // Default to the current month
         $month = $request->get('month', Carbon::now()->month);
