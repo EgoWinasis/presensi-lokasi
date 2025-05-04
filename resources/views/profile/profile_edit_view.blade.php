@@ -41,6 +41,12 @@
                                     value="{{old('nik') ? old('nik') : $profile[0]->nik}}" />
                                 <x-adminlte-input name="name" label="Nama" placeholder="Nama"
                                     value="{{old('name') ? old('name') : $profile[0]->name }}" />
+                                <x-adminlte-input name="jabatan" label="Jabatan" placeholder="Jabatan"
+                                    value="{{old('jabatan') ? old('jabatan') : $profile[0]->jabatan }}" />
+                                <x-adminlte-input name="hp" label="No. HP" placeholder="No. HP"
+                                    value="{{old('hp') ? old('hp') : $profile[0]->hp }}" />
+                                <x-adminlte-input name="status_karyawan" label="Status Karyawan" placeholder="Status Karyawan"
+                                    value="{{old('status_karyawan') ? old('status_karyawan') : $profile[0]->status_karyawan }}" />
                                 <x-adminlte-input type="email" name="email" readonly label="Email" placeholder="Email"
                                     value="{{old('email') ? old('email') : $profile[0]->email }}" />
                                

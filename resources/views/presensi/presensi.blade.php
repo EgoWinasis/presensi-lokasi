@@ -370,10 +370,15 @@ var longitude;
 
     // If the browser supports geolocation, get the user's location
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(onLocationFound, onLocationError);
-    } else {
-        alert("Geolocation is not supported by this browser.");
-    }
+    navigator.geolocation.getCurrentPosition(onLocationFound, onLocationError, {
+        enableHighAccuracy: true,
+        timeout: 10000, // 10 detik, supaya kalau gagal nggak nunggu lama
+        maximumAge: 0 // jangan pakai cache lokasi lama
+    });
+} else {
+    alert("Geolocation is not supported by this browser.");
+}
+
 
     document.addEventListener("DOMContentLoaded", function () {
         const btnMasuk = document.getElementById("btnMasuk");

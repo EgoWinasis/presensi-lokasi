@@ -49,6 +49,39 @@
                             </div>
                             <div class="row p-1">
                                 <div class="col-3">
+                                    <h6>Jabatan </h6>
+                                </div>
+                                <div class="col-1">
+                                    <h6>:</h6>
+                                </div>
+                                <div class="col-8">
+                                    <h6>{{$profile[0]->jabatan}}</h6>
+                                </div>
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3">
+                                    <h6>No. Hp </h6>
+                                </div>
+                                <div class="col-1">
+                                    <h6>:</h6>
+                                </div>
+                                <div class="col-8">
+                                    <h6>{{$profile[0]->hp}}</h6>
+                                </div>
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3">
+                                    <h6>Status Karyawan </h6>
+                                </div>
+                                <div class="col-1">
+                                    <h6>:</h6>
+                                </div>
+                                <div class="col-8">
+                                    <h6>{{$profile[0]->status_karyawan}}</h6>
+                                </div>
+                            </div>
+                            <div class="row p-1">
+                                <div class="col-3">
                                     <h6>Email</h6>
                                 </div>
                                 <div class="col-1">

@@ -72,6 +72,9 @@ class ProfileController extends Controller
         $validatedData = $request->validate([
             'nik' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
+            'jabatan' => ['required', 'string', 'max:255'],
+            'hp' => ['required', 'string', 'max:16'],
+            'status_karyawan' => ['required', 'string', 'max:255'],
             // foto
             'foto' => 'image|file|mimes:png,jpg,jpeg',
             // ttd
