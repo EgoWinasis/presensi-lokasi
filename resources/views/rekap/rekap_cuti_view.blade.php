@@ -19,7 +19,7 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <form method="GET" action="{{ route('rekap.index') }}" class="form-inline mb-3">
+                        <form method="GET" action="{{ route('rekap-cuti.index') }}" class="form-inline mb-3">
                             <label for="start_date" class="mr-2">Pilih Rentang Tanggal:</label>
                             <input type="date" name="start_date" id="start_date" class="form-control" value="{{ request('start_date') }}">
                             <span class="mx-2">-</span>
@@ -38,7 +38,7 @@
                             @endauth
                         
                             <button type="submit" class="btn btn-primary ml-2">Filter</button>
-                            <a href="{{ route('rekap.index') }}" class="btn btn-secondary ml-2">Reset</a>
+                            <a href="{{ route('rekap-cuti.index') }}" class="btn btn-secondary ml-2">Reset</a>
                         </form>
                         
                         <div class="row">
