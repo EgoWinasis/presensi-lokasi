@@ -44,7 +44,40 @@
                         <div class="row">
                             
                             <!-- Total Users Card -->
-                            <div class="col-lg-4 col-4">
+                            <div class="col-lg-2 col-2">
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3>{{$totalCuti}}</h3>
+                                        <p>Total Pengajuan</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-2">
+                                <div class="small-box bg-primary">
+                                    <div class="inner">
+                                        <h3>{{$totalCuti}}</h3>
+                                        <p>Izin</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-2">
+                                <div class="small-box bg-secondary">
+                                    <div class="inner">
+                                        <h3>{{$totalCuti}}</h3>
+                                        <p>Sakit</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-2">
                                 <div class="small-box bg-success">
                                     <div class="inner">
                                         <h3>{{$cutiApproved}}</h3>
@@ -57,7 +90,7 @@
                             </div>
                 
                             <!-- Total Admins Card -->
-                            <div class="col-lg-4 col-4">
+                            <div class="col-lg-2 col-2">
                                 <div class="small-box bg-danger">
                                     <div class="inner">
                                         <h3>{{$cutiRejected}}</h3>
@@ -70,14 +103,14 @@
                             </div>
                 
                             <!-- Pending Leave Applications Card -->
-                            <div class="col-lg-4 col-4">
+                            <div class="col-lg-2 col-2">
                                 <div class="small-box bg-warning">
                                     <div class="inner">
                                         <h3>{{$cutiPending}}</h3>
                                         <p>Menunggu</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="fas fa-use-edit"></i>
+                                        <i class="fas fa-user-edit"></i>
                                     </div>
                                 </div>
                             </div>
