@@ -51,7 +51,7 @@
                                         <p>Total Pengajuan</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="fas fa-check"></i>
+                                        <i class="fas fa-calendar"></i>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                         <p>Izin</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="fas fa-check"></i>
+                                        <i class="fas fa-user-slash"></i>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                         <p>Sakit</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="fas fa-check"></i>
+                                        <i class="fas fa-user-md"></i>
                                     </div>
                                 </div>
                             </div>
