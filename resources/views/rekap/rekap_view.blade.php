@@ -41,35 +41,47 @@
                             <a href="{{ route('rekap.index') }}" class="btn btn-secondary ml-2">Reset</a>
                         </form>
                         
-                        <div class="row mb-3">
-                        <div class="col-md-4">
-                            <div class="card text-white bg-primary">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Total Hari Hadir</h5>
-                                    <p class="card-text display-6">6</p>
+                        <div class="row">
+                            
+                            <!-- Total Users Card -->
+                            <div class="col-lg-4 col-4">
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Total Kehadiran</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card text-white bg-success">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Tepat Waktu</h5>
-                                    <p class="card-text display-6">
-                                        5
-                                    </p>
+                
+                            <!-- Total Admins Card -->
+                            <div class="col-lg-4 col-4">
+                                <div class="small-box bg-success">
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Tepat Waktu</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-user-clock"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card text-white bg-danger">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Terlambat</h5>
-                                    <p class="card-text display-6">
-                                        6
-                                    </p>
+                
+                            <!-- Pending Leave Applications Card -->
+                            <div class="col-lg-4 col-4">
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>5</h3>
+                                        <p>Terlambat</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            
                         </div>
 
                         <div class="table-responsive">
@@ -228,26 +240,8 @@
             "autoWidth": true,
             "responsive": true,
 
-            "buttons": [{
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2,3,4,5,6,7,8,9]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2,3,4,5,6,7,8,9]
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 1, 2,3,4,5,6,7,8,9]
-                    }
-                }
-            ]
-        }).buttons().container().appendTo('#table_user_wrapper .col-md-6:eq(0)');
+           
+        });
 
     });
 
