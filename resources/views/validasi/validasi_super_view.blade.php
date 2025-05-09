@@ -26,6 +26,7 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">User</th>
+                                        <th class="text-center">Jenis</th>
                                         <th class="text-center">Tanggal Mulai </th>
                                         <th class="text-center">Tanggal Selesai </th>
                                         <th class="text-center">Jumlah Hari </th>
@@ -41,6 +42,7 @@
                                     <tr>
                                         <td class="text-center">{{ $i++ }}</td> <!-- Menampilkan ID -->
                                         <td class="text-center">{{ $item->user->name }}</td>
+                                        <td class="text-center">{{ $item->jenis }}</td>
                                         <!-- Menampilkan nama karyawan -->
                                         <td class="text-center">
                                             {{ \Carbon\Carbon::parse($item->tgl_mulai_cuti)->format('d-m-Y') }}</td>

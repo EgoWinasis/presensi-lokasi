@@ -11,6 +11,7 @@ class Cuti extends Model
 
     protected $fillable = [
         'user_id',
+        'jenis',
         'tgl_mulai_cuti',
         'tgl_selesai_cuti',
         'jumlah_hari',
