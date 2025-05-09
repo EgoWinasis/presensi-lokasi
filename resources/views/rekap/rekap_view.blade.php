@@ -41,6 +41,37 @@
                             <a href="{{ route('rekap.index') }}" class="btn btn-secondary ml-2">Reset</a>
                         </form>
                         
+                        <div class="row mb-3">
+                        <div class="col-md-4">
+                            <div class="card text-white bg-primary">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Total Hari Hadir</h5>
+                                    <p class="card-text display-6">6</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-white bg-success">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Tepat Waktu</h5>
+                                    <p class="card-text display-6">
+                                        5
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-white bg-danger">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Terlambat</h5>
+                                    <p class="card-text display-6">
+                                        6
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
                         <div class="table-responsive">
 
                         <table id="table_user" class="table table-bordered table-striped table-hover">
