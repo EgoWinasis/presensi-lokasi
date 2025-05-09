@@ -9,6 +9,7 @@ use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\PengajuanCutiController;
 use App\Http\Controllers\ValidasiCutiController;
 use App\Http\Controllers\RekapController;
+use App\Http\Controllers\RekapCutiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,4 +115,6 @@ Route::middleware('auth')->group(function () {
 
     // rekap
     Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
+    // rekap
+    Route::get('/rekap-cuti', [RekapCutiController::class, 'index'])->name('rekap-cuti.index');
 });
