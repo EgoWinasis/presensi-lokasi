@@ -45,6 +45,24 @@ class RekapController extends Controller
     // Fetch data
     $presensi = $presensiQuery->orderBy('created_at', 'desc')->get();
 
+
+     // Count total presensi
+     $totalPresensi = $presensi->count();
+
+     // Define 30-minute tolerance (tepat waktu if jam_masuk <= 08:30:00)
+     $thresholdTime = '08:30:00';
+ 
+     // Count tepat waktu
+     $tepatWaktu = $presensi->filter(function ($item) use ($thresholdTime) {
+         return $item->jam_masuk && $item->jam_masuk <= $thresholdTime;
+     })->count();
+ 
+     // Count terlambat
+     $terlambat = $presensi->filter(function ($item) use ($thresholdTime) {
+         return $item->jam_masuk && $item->jam_masuk > $thresholdTime;
+     })->count();
+
+
     // Fetch list of users (for dropdown)
     $users = DB::table('users')
         ->select('*')
@@ -55,7 +73,8 @@ class RekapController extends Controller
 
     // Return view with all variables
     return view('rekap.rekap_view', compact(
-        'presensi', 'month', 'startDate', 'endDate', 'users', 'selectedUserId'
+        'presensi', 'month', 'startDate', 'endDate', 'users', 'selectedUserId','totalPresensi',
+        'tepatWaktu','terlambat'
     ));
 }
 

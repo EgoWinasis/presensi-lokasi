@@ -47,7 +47,7 @@
                             <div class="col-lg-4 col-4">
                                 <div class="small-box bg-info">
                                     <div class="inner">
-                                        <h3>5</h3>
+                                        <h3>{{$totalPresensi}}</h3>
                                         <p>Total Kehadiran</p>
                                     </div>
                                     <div class="icon">
@@ -60,7 +60,7 @@
                             <div class="col-lg-4 col-4">
                                 <div class="small-box bg-success">
                                     <div class="inner">
-                                        <h3>5</h3>
+                                        <h3>{{$tepatWaktu}}</h3>
                                         <p>Tepat Waktu</p>
                                     </div>
                                     <div class="icon">
@@ -73,7 +73,7 @@
                             <div class="col-lg-4 col-4">
                                 <div class="small-box bg-warning">
                                     <div class="inner">
-                                        <h3>5</h3>
+                                        <h3>{{$terlambat}}</h3>
                                         <p>Terlambat</p>
                                     </div>
                                     <div class="icon">
