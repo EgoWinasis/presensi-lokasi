@@ -90,18 +90,15 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
-                                    <th class="text-center">Tanggal</th>
                                     @if (Auth::user()->role != 'user')
                                     <th>Nama</th>
                                     @endif
-                                    <th class="text-center">Jam Masuk</th>
-                                    <th class="text-center">Foto Masuk</th>
-                                    <th class="text-center">Lokasi Masuk</th>
-                                    <th class="text-center">Keterangan Masuk</th>
-                                    <th class="text-center">Jam Keluar</th>
-                                    <th class="text-center">Foto Keluar</th>
-                                    <th class="text-center">Lokasi Keluar</th>
-                                    <th class="text-center">Keterangan Keluar</th>
+                                    <th class="text-center">Tanggal Mulai Cuti</th>
+                                    <th class="text-center">Tanggal Selesai Cuti</th>
+                                    <th class="text-center">Jumlah Hari</th>
+                                    <th class="text-center">Keterangan</th>
+                                    <th class="text-center">Status Admin</th>
+                                    <th class="text-center">Status SuperAdmin</th>
                                 </tr>
                             </thead>
                           
@@ -109,90 +106,43 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($presensi as $item)
+                                @foreach ($cuti as $item)
                                 <tr>
                                     <td class="text-center">{{ $no++ }}</td>
-                                    <td class="text-center">{{ \Carbon\Carbon::parse($item->tgl)->format('d-m-Y') }}</td>
                                     @if (Auth::user()->role != 'user')
                                     <td class="text-center">{{ $item->user->name ?? '-' }}</td>
                                     @endif
-                                    <td class="text-center">{{ $item->jam_masuk ?? '-' }}</td>
-
-                                    <!-- Handle Foto Masuk -->
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($item->tgl_mulai_cuti)->format('d-m-Y') }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($item->tgl_selesai_cuti)->format('d-m-Y') }}</td>
+                                    <td class="text-center">{{ $item->jumlah_hari ?? '-' }}</td>
+                                    <td class="text-center">{{ $item->keterangan ?? '-' }}</td>
                                     <td class="text-center">
-                                        @if($item->foto_masuk)
-                                        <a href="{{ asset('storage/presensi_images/'.$item->foto_masuk) }}"
-                                            target="_blank">
-                                            <img src="{{ asset('storage/presensi_images/'.$item->foto_masuk) }}"
-                                                width="50" height="50" />
-                                        </a>
+                                        <!-- Status Admin -->
+                                        @if($item->status_admin == 'belum divalidasi')
+                                            <span class="badge badge-warning">{{ ucfirst($item->status_admin) }}</span>
+                                        @elseif($item->status_admin == 'disetujui')
+                                            <span class="badge badge-success">{{ ucfirst($item->status_admin) }}</span>
+                                        @elseif($item->status_admin == 'ditolak')
+                                            <span class="badge badge-danger">{{ ucfirst($item->status_admin) }}</span>
                                         @else
-                                        <span>-</span>
-                                        @endif
-                                    </td>
-
-                                    <td class="text-center">
-                                        @if($item->lokasi_masuk)
-                                            @php
-                                                // Extract latitude and longitude from the lokasi_masuk string
-                                                preg_match('/lat:\s*(-?\d+\.\d+),\s*lng:\s*(-?\d+\.\d+)/', $item->lokasi_masuk, $matches);
-                                                $latitude = $matches[1] ?? null;
-                                                $longitude = $matches[2] ?? null;
-                                            @endphp
-                                    
-                                            @if($latitude && $longitude)
-                                                <a href="https://www.google.com/maps?q={{ $latitude }},{{ $longitude }}" target="_blank">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            @else
-                                                <span>-</span>
-                                            @endif
-                                        @else
-                                            <span>-</span>
+                                            <span class="badge badge-secondary">{{ ucfirst($item->status_admin) }}</span>
                                         @endif
                                     </td>
                                     
-                                    
-                                    <td class="text-center">{{ $item->ket_masuk ?? '-' }}</td>
-
-                                    <td class="text-center">{{ $item->jam_keluar ?? '-' }}</td>
-
-                                    <!-- Handle Foto Keluar -->
                                     <td class="text-center">
-                                        @if($item->foto_keluar)
-                                        <a href="{{ asset('storage/presensi_images/'.$item->foto_keluar) }}"
-                                            target="_blank">
-                                            <img src="{{ asset('storage/presensi_images/'.$item->foto_keluar) }}"
-                                                width="50" height="50" />
-                                        </a>
+                                        <!-- Status Superadmin -->
+                                        @if($item->status_superadmin == 'belum divalidasi')
+                                            <span class="badge badge-warning">{{ ucfirst($item->status_superadmin) }}</span>
+                                        @elseif($item->status_superadmin == 'disetujui')
+                                            <span class="badge badge-success">{{ ucfirst($item->status_superadmin) }}</span>
+                                        @elseif($item->status_superadmin == 'ditolak')
+                                            <span class="badge badge-danger">{{ ucfirst($item->status_superadmin) }}</span>
                                         @else
-                                        <span>-</span>
+                                            <span class="badge badge-secondary">{{ ucfirst($item->status_superadmin) }}</span>
                                         @endif
                                     </td>
-
-                                    <!-- Handle Lokasi Keluar (Map Icon) -->
-                                    <td class="text-center">
-                                        @if($item->lokasi_keluar)
-                                            @php
-                                                // Extract latitude and longitude from the lokasi_keluar string
-                                                preg_match('/lat:\s*(-?\d+\.\d+),\s*lng:\s*(-?\d+\.\d+)/', $item->lokasi_keluar, $matches);
-                                                $latitude = $matches[1] ?? null;
-                                                $longitude = $matches[2] ?? null;
-                                            @endphp
                                     
-                                            @if($latitude && $longitude)
-                                                <a href="https://www.google.com/maps?q={{ $latitude }},{{ $longitude }}" target="_blank">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            @else
-                                                <span>-</span>
-                                            @endif
-                                        @else
-                                            <span>-</span>
-                                        @endif
-                                    </td>
-
-                                    <td class="text-center">{{ $item->ket_keluar ?? '-' }}</td>
+                                   
                                 </tr>
 
                                 @endforeach
