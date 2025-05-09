@@ -32,6 +32,7 @@
                                 <tr>
                                     <th class="text-center">No</th>
                                     <th class="text-center">Nama Karyawan</th>
+                                    <th class="text-center">Jenis</th>
                                     <th class="text-center">Tanggal Mulai Cuti</th>
                                     <th class="text-center">Tanggal Selesai Cuti</th>
                                     <th class="text-center">Jumlah Hari</th>
@@ -49,6 +50,7 @@
                                 <tr>
                                     <td class="text-center">{{ $i++ }}</td> <!-- Menampilkan ID -->
                                     <td class="text-center">{{ $item->user->name }}</td> <!-- Menampilkan nama karyawan -->
+                                    <td class="text-center">{{ $item->jenis }}</td> <!-- Menampilkan nama karyawan -->
                                     <td class="text-center">{{ \Carbon\Carbon::parse($item->tgl_mulai_cuti)->format('d-m-Y') }}</td> <!-- Tanggal Cuti -->
                                     <td class="text-center">{{ \Carbon\Carbon::parse($item->tgl_selesai_cuti)->format('d-m-Y') }}</td> <!-- Tanggal Cuti -->
                                     <td class="text-center">{{ $item->jumlah_hari }}</td> <!-- Keterangan -->
@@ -250,6 +252,10 @@
                 html: `
                     <table class="table table-bordered">
                         
+                        <tr>
+                            <th class="text-left">Jenis</th>
+                            <td>${jenis}</td>
+                        </tr>
                         <tr>
                             <th class="text-left">Tanggal Mulai</th>
                             <td>${tglMulai}</td>

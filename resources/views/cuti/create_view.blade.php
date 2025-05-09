@@ -24,17 +24,24 @@
                         <form action="{{ route('cuti.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="tgl_mulai_cuti">Tanggal Mulai Cuti</label>
+                                <label for="jenis">Jenis</label>
+                                <select name="jenis" id="jenis" class="form-control" required>
+                                    <option value="Cuti">Cuti</option>
+                                    <option value="Izin">Izin</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tgl_mulai_cuti">Tanggal Mulai</label>
                                 <input type="date" name="tgl_mulai_cuti" id="tgl_mulai_cuti" class="form-control" required>
                             </div>
                     
                             <div class="form-group">
-                                <label for="tgl_selesai_cuti">Tanggal Selesai Cuti</label>
+                                <label for="tgl_selesai_cuti">Tanggal Selesai</label>
                                 <input type="date" name="tgl_selesai_cuti" id="tgl_selesai_cuti" class="form-control" required>
                             </div>
                     
                             <div class="form-group">
-                                <label for="jumlah_hari">Jumlah Hari Cuti</label>
+                                <label for="jumlah_hari">Jumlah Hari</label>
                                 <input type="number" name="jumlah_hari" id="jumlah_hari" class="form-control" readonly>
                             </div>
                     
@@ -43,7 +50,7 @@
                                 <textarea name="keterangan" id="keterangan" rows="4" class="form-control" required></textarea>
                             </div>
                     
-                            <button type="submit" class="btn btn-primary mt-3">Ajukan Cuti</button>
+                            <button type="submit" class="btn btn-primary mt-3">Ajukan</button>
                         </form>
                         <br><br>
 

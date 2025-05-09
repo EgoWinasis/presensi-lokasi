@@ -28,6 +28,14 @@
                             @csrf
                             @method('PUT')
 
+                            <div class="form-group">
+                                <label for="jenis">Jenis</label>
+                                <select name="jenis" id="jenis" class="form-control" required>
+                                    <option value="Cuti" {{ old('jenis', $data->jenis) == 'Cuti' ? 'selected' : '' }}>Cuti</option>
+                                    <option value="Izin" {{ old('jenis', $data->jenis) == 'Izin' ? 'selected' : '' }}>Izin</option>
+                                </select>
+                            </div>
+
                             <!-- Start Date Field -->
                             <div class="form-group">
                                 <label for="tgl_mulai_cuti">Tanggal Mulai Cuti</label>

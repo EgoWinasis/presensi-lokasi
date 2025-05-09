@@ -32,6 +32,7 @@ class PengajuanCutiController extends Controller
     {
         // Validasi data input
         $request->validate([
+            'jenis' => 'required|string',
             'tgl_mulai_cuti' => 'required|date',
             'tgl_selesai_cuti' => 'required|date|after_or_equal:tgl_mulai_cuti',
             'jumlah_hari' => 'required|integer',
@@ -41,6 +42,7 @@ class PengajuanCutiController extends Controller
         // Membuat pengajuan cuti baru
         Cuti::create([
             'user_id' => auth()->id(), // Menyimpan user_id dari user yang sedang login
+            'jenis' => $request->jenis,
             'tgl_mulai_cuti' => $request->tgl_mulai_cuti,
             'tgl_selesai_cuti' => $request->tgl_selesai_cuti,
             'jumlah_hari' => $request->jumlah_hari,
@@ -74,6 +76,7 @@ class PengajuanCutiController extends Controller
 
         // Validation rules for the update
         $validator = Validator::make($request->all(), [
+            'jenis' => 'required|string',
             'tgl_mulai_cuti' => 'required|date',
             'tgl_selesai_cuti' => 'required|date|after_or_equal:tgl_mulai_cuti',  // Make sure the end date is not before the start date
             'jumlah_hari' => 'required|integer',
