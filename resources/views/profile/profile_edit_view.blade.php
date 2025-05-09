@@ -46,11 +46,11 @@
                                 <x-adminlte-input name="hp" oninput="this.value = this.value.replace(/[^0-9]/g, '')" label="No. HP" placeholder="No. HP"
                                     value="{{old('hp') ? old('hp') : $profile[0]->hp }}" />
                                     <x-adminlte-select name="status_karyawan" label="Status Karyawan">
-                                        <option value="Karyawan Kontrak" {{ (old('status_karyawan') ?? $profile[0]->status_karyawan) == 'Karyawan Kontrak' ? 'selected' : '' }}>
-                                            Karyawan Kontrak
+                                        <option value="Aktif" {{ (old('status_karyawan') ?? $profile[0]->status_karyawan) == 'Aktif' ? 'selected' : '' }}>
+                                            Aktif
                                         </option>
-                                        <option value="Karyawan Tetap" {{ (old('status_karyawan') ?? $profile[0]->status_karyawan) == 'Karyawan Tetap' ? 'selected' : '' }}>
-                                            Karyawan Tetap
+                                        <option value="Tidak Aktif" {{ (old('status_karyawan') ?? $profile[0]->status_karyawan) == 'Tidak Aktif' ? 'selected' : '' }}>
+                                            Tidak Aktif
                                         </option>
                                     </x-adminlte-select>
                                     
