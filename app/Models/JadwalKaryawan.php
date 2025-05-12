@@ -10,7 +10,7 @@ class JadwalKaryawan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'tanggal', 'shift', 'keterangan'];
+    protected $fillable = ['user_id', 'tgl'];
 
     public function user()
     {

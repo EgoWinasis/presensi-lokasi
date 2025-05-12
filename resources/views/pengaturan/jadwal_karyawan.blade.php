@@ -43,8 +43,8 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="tanggal">Tanggal</label>
-                                <input type="date" name="tanggal" class="form-control" required>
+                                <label for="tgl">Tanggal</label>
+                                <input type="date" name="tgl" class="form-control" required>
                             </div>
                             <button type="submit" class="btn btn-primary my-2">Simpan Jadwal</button>
                         </form>
@@ -82,14 +82,12 @@
                                 @foreach ($jadwals as $jadwal)
                                 <tr>
                                     <td>{{ $jadwal->user->name }}</td>
-                                    <td>{{ $jadwal->tanggal }}</td>
+                                    <td>{{ $jadwal->tgl }}</td>
                                     <td>{{ $jadwal->created_at->format('Y-m-d H:i') }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
-                        {{ $jadwals->links() }} <!-- pagination -->
                     </div>
                 </div>
 
