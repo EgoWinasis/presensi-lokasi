@@ -123,7 +123,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [JadwalKaryawanController::class, 'index'])->name('index');
         Route::get('/create', [JadwalKaryawanController::class, 'create'])->name('create');
         Route::post('/store', [JadwalKaryawanController::class, 'store'])->name('store');
-        Route::post('/jadwal-karyawan/import-json', [JadwalKaryawanController::class, 'importJson'])->name('jadwal-karyawan.import.json');
+        Route::post('/import-json', [JadwalKaryawanController::class, 'importJson'])->name('jadwal-karyawan.import.json');
 
     });
 
