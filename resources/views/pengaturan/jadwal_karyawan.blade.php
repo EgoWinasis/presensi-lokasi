@@ -155,7 +155,7 @@
         const json = XLSX.utils.sheet_to_json(worksheet);
 
         // Send JSON to Laravel
-        fetch('{{ route("jadwal-karyawan.import.json") }}', {
+        fetch('/jadwal-karyawan/import-json', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
