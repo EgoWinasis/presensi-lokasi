@@ -119,6 +119,7 @@
         var templateData = users.map(function(user) {
             return {
                 'User ID': user.id,      // Include User ID
+                'User Name': user.name,      // Include User ID
                 'Tanggal': ''            // Include an empty field for 'Tanggal'
             };
         });
