@@ -209,7 +209,7 @@ $("#table_data").DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
-            "ordering": true,
+            "ordering": false,
             "info": true,
             "autoWidth": true,
             "responsive": true,
@@ -233,7 +233,7 @@ $("#table_data").DataTable({
                     }
                 }
             ]
-        }).buttons().container().appendTo('#table_user_wrapper .col-md-6:eq(0)');
+        }).buttons().container().appendTo('#table_data_wrapper .col-md-6:eq(0)');
 </script>
 
 @endsection

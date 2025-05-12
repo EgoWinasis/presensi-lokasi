@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Lokasi;
 use App\Models\Holiday;
+use App\Models\JadwalKaryawan;
 use App\Models\JamAbsen;
 use Carbon\Carbon;
 
@@ -26,10 +27,18 @@ class PresensiController extends Controller
 
         // Get the holidays from the 'holidays' table
         $holidays = Holiday::where('date', '>=', now()->toDateString())->get(); // Get future holidays
-
+        
         // Check if today is a holiday
         $today = now()->toDateString(); // Get today's date in Y-m-d format
         $isHoliday = $holidays->contains('date', $today); // Check if today's date is in the holidays table
+        
+        // Get future schedules for the logged-in user
+        $libur = JadwalKaryawan::where('user_id', $userId)
+        ->where('tgl', '>=', $today)
+        ->get();
+
+        // Check if today is a scheduled date
+        $isLibur = $libur->contains('tgl', $today);
 
         // Get the attendance time settings from the 'jam_absen' table
         $jamAbsen = JamAbsen::first(); // Assuming there is one record for attendance times
@@ -43,7 +52,7 @@ class PresensiController extends Controller
 
 
         // Return the data to the view
-        return view('presensi.presensi', compact('lokasi', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday'));
+        return view('presensi.presensi', compact('lokasi', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday', 'isLibur'));
     }
 
 

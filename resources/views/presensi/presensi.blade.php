@@ -40,7 +40,7 @@
                         <div id="map" style="height: 400px; width: 100%;" class="mb-5 mt-2"></div>
 
                         <!-- Buttons for Presensi -->
-                        @if ($isHoliday)
+                        @if ($isHoliday || $isLibur)
                         <div class="alert alert-warning">
                             <strong>Hari ini Hari Libur!</strong> Anda tidak bisa melakukan presensi hari ini.
                         </div>
