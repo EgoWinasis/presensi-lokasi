@@ -153,19 +153,19 @@
             "buttons": [{
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2,3,4,5,6,7,8]
                     }
                 },
                 {
                     extend: 'pdfHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2,3,4,5,6,7,8]
                     }
                 },
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2,3,4,5,6,7,8]
                     }
                 }
             ]
@@ -278,15 +278,15 @@
                             </tr>
                             <tr>
                                 <th class="text-left">Catatan</th>
-                                <td>${response.catatan_admin}</td>
+                                <td>${response.catatan_admin ?? '-'}</td>
                             </tr>
                             <tr>
                                 <th class="text-left">Status Superadmin</th>
-                                <td>${response.status_superadmin}</td>
+                                <td>${response.status_superadmin }</td>
                                 </tr>
                                 <tr>
                                     <th class="text-left">Catatan</th>
-                                    <td>${response.catatan_superadmin}</td>
+                                    <td>${response.catatan_superadmin ?? '-'}</td>
                                 </tr>
                     </table>
                 `,

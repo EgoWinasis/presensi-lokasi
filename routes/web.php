@@ -115,6 +115,9 @@ Route::middleware('auth')->group(function () {
 
     // rekap
     Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
+    Route::get('/rekap/export-excel', [RekapController::class, 'exportExcel'])->name('rekap.export.excel');
+    Route::get('/rekap/export-pdf', [RekapController::class, 'exportPDF'])->name('rekap.export.pdf');
+
     // rekap
     Route::get('/rekap-cuti', [RekapCutiController::class, 'index'])->name('rekap-cuti.index');
 
