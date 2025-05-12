@@ -254,7 +254,7 @@
                         
                         <tr>
                             <th class="text-left">Jenis</th>
-                            <td>${jenis}</td>
+                            <td>${response.jenis}</td>
                         </tr>
                         <tr>
                             <th class="text-left">Tanggal Mulai</th>

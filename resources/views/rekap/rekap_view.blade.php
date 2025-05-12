@@ -83,6 +83,18 @@
                             </div>
                             
                         </div>
+                        <div class="row">
+                            
+                            <div class="col-lg-4 col-4">
+                                <a href="{{ route('rekap.export.pdf') }}" class="btn btn-danger mb-2">
+                                    <i class="fas fa-file-pdf"></i> Export PDF
+                                </a>
+                                <a href="{{ route('rekap.export.excel') }}" class="btn btn-success mb-2">
+                                    <i class="fas fa-file-excel"></i> Export Excel
+                                </a>
+                            </div>
+                            
+                        </div>
 
                         <div class="table-responsive">
 
