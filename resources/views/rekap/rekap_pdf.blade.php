@@ -49,23 +49,26 @@
 
     <h3>Rekap Presensi</h3>
 
-    <div class="summary" style="display: flex; justify-content: center; flex-wrap: nowrap; margin-bottom: 20px;">
-
-        <div class="card" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin: 0 10px; width: 150px; text-align: center; border-radius: 5px;">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <div style="display: inline-block; background-color: #f0f0f0; border: 1px solid #ccc; 
+                    padding: 10px; margin: 0 10px; width: 150px; text-align: center; border-radius: 5px;">
             <strong>Total Presensi</strong>
             <div>{{ $totalPresensi }}</div>
         </div>
     
-        <div class="card" style="background-color: #4CAF50; color: white; border: 1px solid #ccc; padding: 10px; margin: 0 10px; width: 150px; text-align: center; border-radius: 5px;">
+        <div style="display: inline-block; background-color: #4CAF50; color: white; border: 1px solid #ccc; 
+                    padding: 10px; margin: 0 10px; width: 150px; text-align: center; border-radius: 5px;">
             <strong>Tepat Waktu</strong>
             <div>{{ $tepatWaktu }} ({{ $totalPresensi > 0 ? round(($tepatWaktu / $totalPresensi) * 100, 2) : 0 }}%)</div>
         </div>
     
-        <div class="card" style="background-color: #f44336; color: white; border: 1px solid #ccc; padding: 10px; margin: 0 10px; width: 150px; text-align: center; border-radius: 5px;">
+        <div style="display: inline-block; background-color: #f44336; color: white; border: 1px solid #ccc; 
+                    padding: 10px; margin: 0 10px; width: 150px; text-align: center; border-radius: 5px;">
             <strong>Terlambat</strong>
             <div>{{ $terlambat }} ({{ $totalPresensi > 0 ? round(($terlambat / $totalPresensi) * 100, 2) : 0 }}%)</div>
         </div>
     </div>
+    
     
 
     <table>
