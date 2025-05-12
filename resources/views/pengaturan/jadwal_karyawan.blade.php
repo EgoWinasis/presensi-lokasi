@@ -120,7 +120,7 @@
             return {
                 'User ID': user.id,      // Include User ID
                 'User Name': user.name,      // Include User ID
-                'Tanggal': ''            // Include an empty field for 'Tanggal'
+                'Tanggal (YYYY-MM-DD)': ''            // Include an empty field for 'Tanggal'
             };
         });
 
@@ -154,7 +154,8 @@
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const json = XLSX.utils.sheet_to_json(worksheet);
-
+        console.log(json);
+        
         // Send JSON to Laravel
         fetch('/jadwal-karyawan/import-json', {
             method: 'POST',
