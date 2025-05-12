@@ -52,15 +52,15 @@
 
                     <div class="col-md-6">
                         <h4>Import dari Excel</h4>
-                        <form method="POST" action="{{ route('jadwal-karyawan.import') }}" enctype="multipart/form-data">
-                            @csrf
+                        <form id="excelForm">
                             <div class="form-group">
-                                <label for="file">Pilih File Excel (.xlsx)</label>
-                                <input type="file" name="file" class="form-control" required>
+                                <label for="excelFile">Upload Excel File</label>
+                                <input type="file" id="excelFile" accept=".xlsx, .xls" class="form-control" required>
                             </div>
-                            <button type="submit" class="btn btn-success my-2">Import</button>
-                            <a href="#" id="download-template" class="btn btn-info my-2">Download Template</a>
+                            <button type="submit" class="btn btn-success">Import</button>
                         </form>
+                            <a href="#" id="download-template" class="btn btn-info my-2">Download Template</a>
+                        
                     </div>
 
                 </div>
@@ -115,15 +115,18 @@
     document.getElementById('download-template').addEventListener('click', function(event) {
         event.preventDefault();
 
-        // Prepare data for the Excel template
+        // Prepare data for the Excel template, including 'User ID' and 'Tanggal'
         var templateData = users.map(function(user) {
             return {
-                'User ID': user.id  // Only include the user ID for the template
+                'User ID': user.id,      // Include User ID
+                'Tanggal': ''            // Include an empty field for 'Tanggal'
             };
         });
 
         // Create a new workbook
         var wb = XLSX.utils.book_new();
+
+        // Convert JSON data to a worksheet
         var ws = XLSX.utils.json_to_sheet(templateData);
 
         // Append the worksheet to the workbook
@@ -132,5 +135,49 @@
         // Download the workbook as an Excel file
         XLSX.writeFile(wb, 'template_jadwal_karyawan.xlsx');
     });
+
+
+    document.getElementById('excelForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const fileInput = document.getElementById('excelFile');
+    const file = fileInput.files[0];
+
+    if (!file) return alert("Please select a file.");
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const json = XLSX.utils.sheet_to_json(worksheet);
+
+        // Send JSON to Laravel
+        fetch('{{ route("jadwal-karyawan.import.json") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ data: json })
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert('Import berhasil!');
+            console.log(result);
+        })
+        .catch(err => {
+            alert('Gagal mengimport.');
+            console.error(err);
+        });
+    };
+
+    reader.readAsArrayBuffer(file);
+});
+
+
 </script>
+
 @endsection

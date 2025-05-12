@@ -37,23 +37,18 @@ class JadwalKaryawanController extends Controller
         return redirect()->back()->with('success', 'Jadwal berhasil ditambahkan');
     }
 
-    public function import(Request $request)
-    {
-        // Validate the uploaded file
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
+    public function importJson(Request $request)
+{
+    $data = $request->input('data'); // expects array of rows
+
+    foreach ($data as $row) {
+        \App\Models\JadwalKaryawan::create([
+            'user_id' => $row['User ID'] ?? null,
+            'tgl'     => $row['Tanggal'] ?? null,
         ]);
-
-        // Process the file using SheetJS or Laravel Excel package if needed
-        // For example, you could use Laravel Excel package for import
-        // Here we assume you handle the import logic or add it later
-
-        // Return to the previous page with success message after handling the import
-        return back()->with('success', 'File imported successfully.');
     }
 
-    public function template()
-    {
-        return response()->download(public_path('template-jadwal.xlsx'));
-    }
+    return response()->json(['message' => 'Data berhasil diimport.']);
+}
+
 }
