@@ -79,4 +79,54 @@ class RekapController extends Controller
 }
 
 
+public function exportPDF(Request $request)
+{
+    // Get logged-in user
+    $user = Auth::user();
+
+    // Filters
+    $month = $request->get('month', Carbon::now()->month);
+    $startDate = $request->get('start_date');
+    $endDate = $request->get('end_date');
+    $selectedUserId = $request->get('user_id');
+
+    // Build query
+    if ($user->role == 'user') {
+        $presensiQuery = Presensi::where('user_id', $user->id);
+    } else {
+        $presensiQuery = Presensi::query();
+        if (!empty($selectedUserId)) {
+            $presensiQuery->where('user_id', $selectedUserId);
+        }
+    }
+
+    // Apply filters
+    if ($month) {
+        $presensiQuery->whereMonth('created_at', $month);
+    }
+
+    if ($startDate && $endDate) {
+        $presensiQuery->whereBetween('created_at', [$startDate, $endDate]);
+    }
+
+    // Get data
+    $presensi = $presensiQuery->orderBy('created_at', 'desc')->get();
+
+    // Count totals
+    $thresholdTime = '08:30:00';
+    $totalPresensi = $presensi->count();
+    $tepatWaktu = $presensi->filter(fn($item) => $item->jam_masuk && $item->jam_masuk <= $thresholdTime)->count();
+    $terlambat = $presensi->filter(fn($item) => $item->jam_masuk && $item->jam_masuk > $thresholdTime)->count();
+
+    // Load view
+    $html = view('rekap.rekap_pdf', compact(
+        'presensi', 'month', 'startDate', 'endDate', 'totalPresensi', 'tepatWaktu', 'terlambat'
+    ))->render();
+
+    // Create PDF
+    $mpdf = new Mpdf();
+    $mpdf->WriteHTML($html);
+    return $mpdf->Output('rekap_presensi.pdf', 'D'); // Force download
+}
+
 }
