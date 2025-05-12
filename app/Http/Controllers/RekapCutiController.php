@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mpdf\Mpdf;
+
+
 class RekapCutiController extends Controller
 {
     public function index(Request $request)
@@ -67,6 +70,57 @@ class RekapCutiController extends Controller
         ));
     }
     
-
+    public function exportPDF(Request $request)
+    {
+        // Build Cuti query
+        if ($user->role == 'user') {
+            $cutiQuery = Cuti::where('user_id', $user->id);
+        } else {
+            $cutiQuery = Cuti::query();
+    
+            if (!empty($selectedUserId)) {
+                $cutiQuery->where('user_id', $selectedUserId);
+            }
+        }
+    
+        // Apply month filter
+        if ($month) {
+            $cutiQuery->whereMonth('created_at', $month);
+        }
+    
+        // Apply date range filter
+        if ($startDate && $endDate) {
+            $cutiQuery->whereBetween('created_at', [$startDate, $endDate]);
+        }
+    
+        // Fetch data
+        $cuti = $cutiQuery->orderBy('created_at', 'desc')->get();
+    
+        // Count total Cuti
+        $totalCuti = $cuti->count();
+    
+        // Optionally count per status
+        $cutiApproved = $cuti->where('status_admin', 'disetujui')->where('status_superadmin', 'disetujui')->count();
+        $cutiRejected = $cuti->where('status_admin', 'ditolak')->where('status_superadmin', 'ditolak')->count();
+        $cutiPending = $cuti->where('status_admin', 'menunggu')->where('status_superadmin', 'menunggu')->count();
+    
+        // Fetch users (for dropdown)
+        $users = DB::table('users')
+            ->select('*')
+            ->where('role', '=', 'user')
+            ->whereNull('deleted_at')
+            ->orderBy('id')
+            ->get();
+    
+        // Load view
+        $html = view('rekap.rekap_cuti_pdf', compact(
+            'cuti', 'month', 'startDate', 'endDate', 'totalCuti', 'cutiApproved', 'cutiRejected', 'cutiPending'
+        ))->render();
+    
+        // Create PDF
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($html);
+        return $mpdf->Output('rekap_cuti_presensi.pdf', 'D'); // Force download
+    }
 
 }

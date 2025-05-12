@@ -58,13 +58,13 @@
                 </div>
             </td>
             <td style="text-align: center;">
-                <div style=" color: white; padding: 10px; width: 200px; margin: auto;">
+                <div style=" padding: 10px; width: 200px; margin: auto;">
                     <strong>Tepat Waktu</strong>
                     <div>{{ $tepatWaktu }} ({{ $totalPresensi > 0 ? round(($tepatWaktu / $totalPresensi) * 100, 2) : 0 }}%)</div>
                 </div>
             </td>
             <td style="text-align: center;">
-                <div style=" color: white; padding: 10px; width: 200px; margin: auto;">
+                <div style=" padding: 10px; width: 200px; margin: auto;">
                     <strong>Terlambat</strong>
                     <div>{{ $terlambat }} ({{ $totalPresensi > 0 ? round(($terlambat / $totalPresensi) * 100, 2) : 0 }}%)</div>
                 </div>
