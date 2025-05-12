@@ -153,7 +153,18 @@
         const workbook = XLSX.read(data, { type: 'array' });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet);
+        const rawData = XLSX.utils.sheet_to_json(worksheet);
+        const json = rawData.map(row => {
+            const tgl = row['Tanggal'];
+            const parsedDate = typeof tgl === 'number'
+                ? new Date((tgl - 25569) * 86400 * 1000).toISOString().split('T')[0]
+                : tgl;
+
+            return {
+                user_id: row['User ID'],
+                tgl: parsedDate
+            };
+        });
         console.log(json);
         
         // Send JSON to Laravel
