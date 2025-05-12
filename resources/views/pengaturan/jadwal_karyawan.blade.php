@@ -70,15 +70,16 @@
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <h4>Daftar Jadwal</h4>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Nama</th>
-                                    <th>Tanggal</th>
-                                    <th>Dibuat</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="table_data">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Tanggal</th>
+                                        <th>Dibuat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                 @foreach ($jadwals as $jadwal)
                                 <tr>
                                     <td>{{ $jadwal->user->name }}</td>
@@ -87,7 +88,8 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                        </table>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -101,6 +103,9 @@
 @include('footer')
 @stop
 
+@section('plugins.Datatables', true)
+@section('plugins.DatatablesPlugins', true)
+@section('plugins.Sweetalert2', true)
 @section('css')
 @endsection
 
@@ -165,7 +170,6 @@
                 tgl: parsedDate
             };
         });
-        console.log(json);
         
         // Send JSON to Laravel
         fetch('/jadwal-karyawan/import-json', {
@@ -190,7 +194,36 @@
     reader.readAsArrayBuffer(file);
 });
 
+$(function () {
+        $("#table_data").DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+            "responsive": true,
 
+            "buttons": [{
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2]
+                    }
+                }
+            ]
+        }).buttons().container().appendTo('#table_user_wrapper .col-md-6:eq(0)');
 </script>
 
 @endsection
