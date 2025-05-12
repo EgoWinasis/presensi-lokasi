@@ -49,7 +49,8 @@
 
     <h3>Rekap Presensi</h3>
 
-    <div class="summary" style="display: flex; justify-content: center; margin-bottom: 20px;">
+    <div class="summary" style="display: flex; justify-content: center; flex-wrap: nowrap; margin-bottom: 20px;">
+
         <div class="card" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 10px; margin: 0 10px; width: 150px; text-align: center; border-radius: 5px;">
             <strong>Total Presensi</strong>
             <div>{{ $totalPresensi }}</div>
@@ -70,6 +71,7 @@
     <table>
         <thead>
             <tr>
+                <th>No</th>
                 <th>Nama</th>
                 <th>Tanggal</th>
                 <th>Jam Masuk</th>
@@ -82,14 +84,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($presensi as $item)
+            @foreach ($presensi as $index => $item)
                 <tr>
+                    <td>{{ $index + 1 }}</td>
                     <td>{{ $item->user->name ?? '-' }}</td>
                     <td>{{ $item->created_at->format('Y-m-d') }}</td>
                     <td>{{ $item->jam_masuk ?? '-' }}</td>
                     <td>
                         @if (!empty($item->foto_masuk))
-                            <img src="{{ public_path('storage/presensi_images/'.$item->foto_masuk) }}" alt="Foto Masuk">
+                        <img src="https://teti-presensi.my.id/storage/presensi_images/{{ $item->foto_masuk }}" alt="Foto Masuk" width="50" height="50">
                         @else
                             -
                         @endif
@@ -98,7 +101,7 @@
                     <td>{{ $item->jam_keluar ?? '-' }}</td>
                     <td>
                         @if (!empty($item->foto_keluar))
-                            <img src="{{ public_path('storage/presensi_images/'.$item->foto_keluar) }}" alt="Foto Keluar">
+                        <img src="https://teti-presensi.my.id/storage/presensi_images/{{ $item->foto_keluar }}" alt="Foto Keluar" width="50" height="50">
                         @else
                             -
                         @endif
