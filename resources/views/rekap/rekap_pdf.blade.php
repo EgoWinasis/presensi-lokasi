@@ -49,28 +49,29 @@
 
     <h3>Rekap Presensi</h3>
 
-    <table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
         <tr>
-            <td style="width: 33%; padding: 10px; text-align: center;">
-                <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
+            <td style="text-align: center;">
+                <div style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ccc; width: 200px; margin: auto; border-radius: 5px;">
                     <strong>Total Presensi</strong>
                     <div>{{ $totalPresensi }}</div>
                 </div>
             </td>
-            <td style="width: 33%; padding: 10px; text-align: center;">
-                <div style="background-color: #4CAF50; color: white; padding: 10px; border-radius: 5px;">
+            <td style="text-align: center;">
+                <div style="background-color: #4CAF50; color: white; padding: 10px; border: 1px solid #ccc; width: 200px; margin: auto; border-radius: 5px;">
                     <strong>Tepat Waktu</strong>
                     <div>{{ $tepatWaktu }} ({{ $totalPresensi > 0 ? round(($tepatWaktu / $totalPresensi) * 100, 2) : 0 }}%)</div>
                 </div>
             </td>
-            <td style="width: 33%; padding: 10px; text-align: center;">
-                <div style="background-color: #f44336; color: white; padding: 10px; border-radius: 5px;">
+            <td style="text-align: center;">
+                <div style="background-color: #f44336; color: white; padding: 10px; border: 1px solid #ccc; width: 200px; margin: auto; border-radius: 5px;">
                     <strong>Terlambat</strong>
                     <div>{{ $terlambat }} ({{ $totalPresensi > 0 ? round(($terlambat / $totalPresensi) * 100, 2) : 0 }}%)</div>
                 </div>
             </td>
         </tr>
     </table>
+    
     
     
     
