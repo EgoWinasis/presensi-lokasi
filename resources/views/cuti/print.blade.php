@@ -41,6 +41,10 @@
             <td>{{ $cuti->user->name }}</td>
         </tr>
         <tr>
+            <th>Jenis</th>
+            <td>{{ $cuti->jenis }}</td>
+        </tr>
+        <tr>
             <th>Tanggal Mulai</th>
             <td>{{ \Carbon\Carbon::parse($cuti->tgl_mulai_cuti)->format('d-m-Y') }}</td>
         </tr>
