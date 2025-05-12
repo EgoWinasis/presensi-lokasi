@@ -86,12 +86,14 @@
                         <div class="row">
                             
                             <div class="col-lg-4 col-4">
-                                <a href="{{ route('rekap.export.pdf') }}" class="btn btn-danger mb-2">
-                                    <i class="fas fa-file-pdf"></i> Export PDF
-                                </a>
-                                <a href="{{ route('rekap.export.excel') }}" class="btn btn-success mb-2">
-                                    <i class="fas fa-file-excel"></i> Export Excel
-                                </a>
+                                <div class="d-flex my-3">
+                                    <button id="exportPdfBtn" class="btn btn-danger mr-2">
+                                        <i class="fas fa-file-pdf"></i> Export PDF
+                                    </button>
+                                    <button id="exportExcelBtn" class="btn btn-success">
+                                        <i class="fas fa-file-excel"></i> Export Excel
+                                    </button>
+                                </div>
                             </div>
                             
                         </div>
@@ -257,6 +259,32 @@
 
     });
 
- 
+    document.getElementById('exportPdfBtn').addEventListener('click', function () {
+        const start = document.getElementById('start_date').value;
+        const end = document.getElementById('end_date').value;
+        const userId = document.querySelector('select[name="user_id"]')?.value ?? '';
+
+        let url = new URL("{{ url('/rekap/export-pdf') }}");
+
+        if (start) url.searchParams.append('start_date', start);
+        if (end) url.searchParams.append('end_date', end);
+        if (userId) url.searchParams.append('user_id', userId);
+
+        window.open(url.toString(), '_blank');
+    });
+
+    document.getElementById('exportExcelBtn').addEventListener('click', function () {
+        const start = document.getElementById('start_date').value;
+        const end = document.getElementById('end_date').value;
+        const userId = document.querySelector('select[name="user_id"]')?.value ?? '';
+
+        let url = new URL("{{ url('/rekap/export/excel') }}");
+
+        if (start) url.searchParams.append('start_date', start);
+        if (end) url.searchParams.append('end_date', end);
+        if (userId) url.searchParams.append('user_id', userId);
+
+        window.open(url.toString(), '_blank');
+    });
 </script>
 @stop
