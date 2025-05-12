@@ -10,7 +10,7 @@ use App\Http\Controllers\PengajuanCutiController;
 use App\Http\Controllers\ValidasiCutiController;
 use App\Http\Controllers\RekapController;
 use App\Http\Controllers\RekapCutiController;
-
+use App\Http\Controllers\JadwalKaryawanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -117,4 +117,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/rekap', [RekapController::class, 'index'])->name('rekap.index');
     // rekap
     Route::get('/rekap-cuti', [RekapCutiController::class, 'index'])->name('rekap-cuti.index');
+
+
+    Route::prefix('jadwal-karyawan')->name('jadwal-karyawan.')->group(function () {
+        Route::get('/', [JadwalKaryawanController::class, 'index'])->name('index');
+        Route::get('/create', [JadwalKaryawanController::class, 'create'])->name('create');
+        Route::post('/store', [JadwalKaryawanController::class, 'store'])->name('store');
+        Route::post('/import', [JadwalKaryawanController::class, 'import'])->name('import');
+        Route::get('/template', [JadwalKaryawanController::class, 'downloadTemplate'])->name('template');
+    });
+
+    
 });

@@ -90,7 +90,7 @@
 
     // Marker 1: from JSON/database (draggable)
     var marker1 = L.marker([initialLat, initialLng], { draggable: true }).addTo(map)
-        .bindPopup("Lokasi dari database").openPopup();
+        .bindPopup("Lokasi tersimpan").openPopup();
 
     // Update hidden input fields when Marker 1 is dragged
     marker1.on('dragend', function (e) {
@@ -121,7 +121,7 @@
                         iconSize: [32, 32],
                         iconAnchor: [16, 32]
                     })
-                }).addTo(map).bindPopup("Now Location").openPopup();
+                }).addTo(map).bindPopup("Lokasi saat ini").openPopup();
             },
             function (error) {
                 console.warn("Geolocation error:", error.message);

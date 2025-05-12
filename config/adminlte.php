@@ -358,6 +358,10 @@ return [
                     'text' => 'Lokasi Presensi',
                     'url' => 'pengaturan-lokasi',
                 ],
+                [
+                    'text' => 'Jadwal Karyawan',
+                    'url' => 'jadwal-karyawan',
+                ],
             ],
             'can'  => ['isAdmin'],
         ],
