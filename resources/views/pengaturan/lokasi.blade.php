@@ -76,39 +76,67 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <script type="text/javascript">
-    // Get the latitude and longitude values from the PHP variables
-    var latitude = {{ $lokasi->latitude ?? '-6.912112310764233' }};
-    var longitude = {{ $lokasi->longitude ?? '109.13200378417969' }};
+    // Get initial marker location from JSON/PHP (e.g. lokasi from DB)
+    var initialLat = {{ $lokasi->latitude ?? '-6.912112310764233' }};
+    var initialLng = {{ $lokasi->longitude ?? '109.13200378417969' }};
 
-    // Initialize the map
-    var map = L.map('map').setView([latitude, longitude], 13);
+    // Initialize the map centered at the JSON location
+    var map = L.map('map').setView([initialLat, initialLng], 13);
 
-    // Add a tile layer (OpenStreetMap)
+    // Add OpenStreetMap tile layer
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Add a marker at the current location
-    var marker = L.marker([latitude, longitude], {
-        draggable: true
-    }).addTo(map);
+    // Marker 1: from JSON/database (draggable)
+    var marker1 = L.marker([initialLat, initialLng], { draggable: true }).addTo(map)
+        .bindPopup("Lokasi dari database").openPopup();
 
-    // Update latitude and longitude input fields when the marker is dragged
-    marker.on('dragend', function (event) {
-        var latlng = event.target.getLatLng();
+    // Update hidden input fields when Marker 1 is dragged
+    marker1.on('dragend', function (e) {
+        var latlng = e.target.getLatLng();
         document.getElementById('latitude').value = latlng.lat;
         document.getElementById('longitude').value = latlng.lng;
     });
 
-    // Enable user to select a location on the map
+    // Update Marker 1 location on map click
     map.on('click', function (e) {
-        var latlng = e.latlng;
-        marker.setLatLng(latlng);
-        document.getElementById('latitude').value = latlng.lat;
-        document.getElementById('longitude').value = latlng.lng;
+        marker1.setLatLng(e.latlng);
+        document.getElementById('latitude').value = e.latlng.lat;
+        document.getElementById('longitude').value = e.latlng.lng;
     });
 
+    // Marker 2: get current location from browser
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                var userLat = position.coords.latitude;
+                var userLng = position.coords.longitude;
+                var userLatLng = [userLat, userLng];
+
+                // Marker 2: current location (blue icon)
+                var marker2 = L.marker(userLatLng, {
+                    icon: L.icon({
+                        iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                        iconSize: [32, 32],
+                        iconAnchor: [16, 32]
+                    })
+                }).addTo(map).bindPopup("Now Location").openPopup();
+            },
+            function (error) {
+                console.warn("Geolocation error:", error.message);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+        );
+    } else {
+        console.warn("Geolocation is not supported.");
+    }
 </script>
+
 
 @endsection
 
