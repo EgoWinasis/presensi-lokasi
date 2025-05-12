@@ -43,8 +43,8 @@ class JadwalKaryawanController extends Controller
 
     foreach ($data as $row) {
         \App\Models\JadwalKaryawan::create([
-            'user_id' => $row['User ID'] ?? null,
-            'tgl'     => $row['Tanggal'] ?? null,
+            'user_id' => $row['user_id'] ?? null,
+            'tgl'     => $row['tgl'] ?? null,
         ]);
     }
 
