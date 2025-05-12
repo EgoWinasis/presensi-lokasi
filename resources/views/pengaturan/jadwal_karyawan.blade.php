@@ -182,20 +182,30 @@
         })
         .then(response => response.json())
         .then(result => {
-            alert('Import berhasil!');
-            console.log(result);
+            Swal.fire({
+                icon: 'success',
+                title: 'Import Berhasil',
+                text: 'Data jadwal karyawan berhasil diimport!',
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                location.reload();
+            });
         })
-        .catch(err => {
-            alert('Gagal mengimport.');
-            console.error(err);
+        .catch(error => {
+            console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Mengimport',
+                text: 'Terjadi kesalahan saat mengirim data ke server.'
+            });
         });
     };
 
     reader.readAsArrayBuffer(file);
 });
 
-$(function () {
-        $("#table_data").DataTable({
+$("#table_data").DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
