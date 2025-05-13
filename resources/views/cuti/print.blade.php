@@ -54,7 +54,7 @@
         </tr>
         <tr>
             <th>Jumlah Hari</th>
-            <td>{{ $cuti->jumlah_hari }}</td>
+            <td>{{ $cuti->jumlah_hari }} Hari</td>
         </tr>
         <tr>
             <th>Keterangan</th>
