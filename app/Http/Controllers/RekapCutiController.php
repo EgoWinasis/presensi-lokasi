@@ -54,6 +54,8 @@ class RekapCutiController extends Controller
         $cutiApproved = $cuti->where('status_admin', 'disetujui')->where('status_superadmin', 'disetujui')->count();
         $cutiRejected = $cuti->where('status_admin', 'ditolak')->where('status_superadmin', 'ditolak')->count();
         $cutiPending = $cuti->where('status_admin', 'belum divalidasi')->where('status_superadmin', 'belum divalidasi')->count();
+        $countIzin = $cuti->where('jenis', 'izin')->count();
+        $countCuti = $cuti->where('jenis', 'cuti')->count();
     
         // Fetch users (for dropdown)
         $users = DB::table('users')
@@ -66,7 +68,7 @@ class RekapCutiController extends Controller
         // Return view
         return view('rekap.rekap_cuti_view', compact(
             'cuti', 'month', 'startDate', 'endDate', 'users', 'selectedUserId',
-            'totalCuti', 'cutiApproved', 'cutiRejected', 'cutiPending'
+            'totalCuti', 'cutiApproved', 'cutiRejected', 'cutiPending','countIzin','countCuti'
         ));
     }
     

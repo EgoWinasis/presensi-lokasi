@@ -58,7 +58,7 @@
                             <div class="col-lg-2 col-2">
                                 <div class="small-box bg-primary">
                                     <div class="inner">
-                                        <h3>{{$totalCuti}}</h3>
+                                        <h3>{{$countIzin}}</h3>
                                         <p>Izin</p>
                                     </div>
                                     <div class="icon">
@@ -69,8 +69,8 @@
                             <div class="col-lg-2 col-2">
                                 <div class="small-box bg-secondary">
                                     <div class="inner">
-                                        <h3>{{$totalCuti}}</h3>
-                                        <p>Sakit</p>
+                                        <h3>{{$countCuti}}</h3>
+                                        <p>Cuti</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fas fa-user-md"></i>
