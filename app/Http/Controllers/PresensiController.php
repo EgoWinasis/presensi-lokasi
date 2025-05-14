@@ -42,7 +42,8 @@ class PresensiController extends Controller
 
         // Get the attendance time settings from the 'jam_absen' table
         $jamAbsen = JamAbsen::first(); // Assuming there is one record for attendance times
-        
+        $jamMasuk = $jamAbsen->jam_masuk;
+        $jamKeluar = $jamAbsen->jam_keluar;
         // Get today's attendance record for the authenticated user
         $presensiToday = Presensi::where('user_id', $userId)
                                  ->whereDate('tgl', $today) // Filter by today's date
@@ -52,7 +53,7 @@ class PresensiController extends Controller
         $currentTime = \Carbon\Carbon::now()->format('H:i');
 
         // Return the data to the view
-        return view('presensi.presensi', compact('lokasi', 'currentTime', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday', 'isLibur'));
+        return view('presensi.presensi', compact('lokasi', 'currentTime','jamMasuk','jamKeluar', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday', 'isLibur'));
     }
 
 
