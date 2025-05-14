@@ -42,7 +42,7 @@ class PresensiController extends Controller
 
         // Get the attendance time settings from the 'jam_absen' table
         $jamAbsen = JamAbsen::first(); // Assuming there is one record for attendance times
-
+        dd($jamAbsen);
         // Get today's attendance record for the authenticated user
         $presensiToday = Presensi::where('user_id', $userId)
                                  ->whereDate('tgl', $today) // Filter by today's date
