@@ -48,9 +48,7 @@
     @if ($presensiToday === null)
         <div class="mt-4">
             <!-- Disable Masuk button if current time is before jam_masuk -->
-            @php
-                $currentTime = \Carbon\Carbon::now()->format('H:i'); // Current time
-            @endphp
+           
             @if ($currentTime < $jamMasuk) 
                 <button id="btnMasuk" class="btn btn-success w-100">
                     <i class="fas fa-sign-in-alt"></i> Masuk

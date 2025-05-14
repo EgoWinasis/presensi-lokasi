@@ -49,10 +49,10 @@ class PresensiController extends Controller
                                  ->first(); // Get the first record
 
 
-
+        $currentTime = \Carbon\Carbon::now()->format('H:i');
 
         // Return the data to the view
-        return view('presensi.presensi', compact('lokasi', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday', 'isLibur'));
+        return view('presensi.presensi', compact('lokasi', 'currentTime', 'holidays', 'jamAbsen', 'presensiToday', 'isHoliday', 'isLibur'));
     }
 
 
