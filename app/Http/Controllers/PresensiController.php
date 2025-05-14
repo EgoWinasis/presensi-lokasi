@@ -33,12 +33,11 @@ class PresensiController extends Controller
         $isHoliday = $holidays->contains('date', $today); // Check if today's date is in the holidays table
         
         // Get future schedules for the logged-in user
-        $libur = JadwalKaryawan::where('user_id', $userId)
-        ->where('tgl', '>=', $today)
-        ->get();
-
-        // Check if today is a scheduled date
-        $isLibur = $libur->contains('tgl', $today);
+        $isLibur = JadwalKaryawan::where('user_id', $userId)
+        ->where('tgl', $today)
+        ->where('keterangan', 'Libur')
+        ->exists();
+    
 
         // Get the attendance time settings from the 'jam_absen' table
         $jamAbsen = JamAbsen::first(); // Assuming there is one record for attendance times
