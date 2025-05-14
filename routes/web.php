@@ -11,6 +11,7 @@ use App\Http\Controllers\ValidasiCutiController;
 use App\Http\Controllers\RekapController;
 use App\Http\Controllers\RekapCutiController;
 use App\Http\Controllers\JadwalKaryawanController;
+use App\Http\Controllers\JadwalKerjaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

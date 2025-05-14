@@ -381,7 +381,7 @@ return [
         [
             'text' => 'Jadwal Kerja',
             'url' => 'jadwal-kerja',
-            'icon' => 'fas fa-fw fa-calendar-check',
+            'icon' => 'fas fa-fw fa-calendar-alt',
             'can'  => ['isUser'],
         ],
         ['header' => 'PENGATURAN AKUN'],
