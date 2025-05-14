@@ -9,7 +9,7 @@ class JadwalKerjaController extends Controller
 {
     public function index()
     {
-        return view('jadwal-kerja.index');
+        return view('jadwal_kerja.index');
     }
 
     public function getJadwal()
