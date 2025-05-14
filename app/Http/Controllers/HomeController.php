@@ -29,7 +29,7 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         
-        if ($user->isActive == 0) {
+        if ($user->isActive == 0 && $user->role == 'user') {
             Auth::logout();
     
             return redirect()->route('login')->withErrors([
