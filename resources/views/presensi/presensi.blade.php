@@ -39,52 +39,71 @@
                         <!-- Map container -->
                         <div id="map" style="height: 400px; width: 100%;" class="mb-5 mt-2"></div>
 
-                        <!-- Buttons for Presensi -->
-                        @if ($isHoliday || $isLibur)
-                        <div class="alert alert-warning">
-                            <strong>Hari ini Hari Libur!</strong> Anda tidak bisa melakukan presensi hari ini.
-                        </div>
-                        @else
-                        @if ($presensiToday === null)
-                        <div class="mt-4">
-                            <!-- Disable Masuk button if current time is before jam_masuk -->
-                            <button id="btnMasuk" class="btn btn-success w-100">
-                                <i class="fas fa-sign-in-alt"></i> Masuk
-                            </button>
-                        </div>
-                        <div class="mt-4">
-                            <!-- Disable Pulang button if current time is after jam_pulang or if user hasn't marked Masuk -->
-                            <button id="btnPulang" class="btn btn-danger w-100" 
-                            disabled>
-                            <i class="fas fa-sign-out-alt"></i> Pulang
-                        </button>
-                    </div>
-                    @else     
-                    <div class="mt-4">
-                        <!-- Disable Masuk button if current time is before jam_masuk -->
-                        <button id="btnMasuk" class="btn btn-success w-100" disabled>
-                            <i class="fas fa-sign-in-alt"></i> Masuk
-                        </button>
-                    </div>
-                    @if ($presensiToday->jam_keluar !== '-')
-                        
-                    <div class="mt-4">
-                        <!-- Disable Pulang button if current time is after jam_pulang or if user hasn't marked Masuk -->
-                        <button id="btnPulang" class="btn btn-danger w-100" disabled>
-                            <i class="fas fa-sign-out-alt"></i> Pulang
-                        </button>
-                    </div>
-                    @else
-                        
-                    <div class="mt-4">
-                        <!-- Disable Pulang button if current time is after jam_pulang or if user hasn't marked Masuk -->
-                        <button id="btnPulang" class="btn btn-danger w-100">
-                            <i class="fas fa-sign-out-alt"></i> Pulang
-                        </button>
-                    </div>
-                    @endif
-                        @endif
-                        @endif
+                      <!-- Buttons for Presensi -->
+@if ($isHoliday || $isLibur)
+    <div class="alert alert-warning">
+        <strong>Hari ini Hari Libur!</strong> Anda tidak bisa melakukan presensi hari ini.
+    </div>
+@else
+    @if ($presensiToday === null)
+        <div class="mt-4">
+            <!-- Disable Masuk button if current time is before jam_masuk -->
+            @php
+                $currentTime = \Carbon\Carbon::now()->format('H:i'); // Current time
+            @endphp
+            @if ($currentTime < $jamMasuk) 
+                <button id="btnMasuk" class="btn btn-success w-100">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            @else
+                <button id="btnMasuk" class="btn btn-success w-100" disabled>
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            @endif
+        </div>
+        <div class="mt-4">
+            <!-- Disable Pulang button if current time is after jam_pulang or if user hasn't marked Masuk -->
+            <button id="btnPulang" class="btn btn-danger w-100" disabled>
+                <i class="fas fa-sign-out-alt"></i> Pulang
+            </button>
+        </div>
+    @else     
+        <div class="mt-4">
+            <!-- Disable Masuk button if current time is before jam_masuk -->
+            @if ($currentTime < $jamMasuk) 
+                <button id="btnMasuk" class="btn btn-success w-100" disabled>
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            @else
+                <button id="btnMasuk" class="btn btn-success w-100" disabled>
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            @endif
+        </div>
+        @if ($presensiToday->jam_keluar !== '-')
+            <div class="mt-4">
+                <!-- Disable Pulang button if current time is after jam_pulang -->
+                @if ($currentTime >= $jamKeluar)
+                    <button id="btnPulang" class="btn btn-danger w-100" disabled>
+                        <i class="fas fa-sign-out-alt"></i> Pulang
+                    </button>
+                @else
+                    <button id="btnPulang" class="btn btn-danger w-100">
+                        <i class="fas fa-sign-out-alt"></i> Pulang
+                    </button>
+                @endif
+            </div>
+        @else
+            <div class="mt-4">
+                <!-- Enable Pulang button only if jam_keluar is not marked as '-' -->
+                <button id="btnPulang" class="btn btn-danger w-100">
+                    <i class="fas fa-sign-out-alt"></i> Pulang
+                </button>
+            </div>
+        @endif
+    @endif
+@endif
+
 
                         <div class="mt-4">
                             <h5>Presensi History</h5>
