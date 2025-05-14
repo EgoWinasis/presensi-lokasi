@@ -78,18 +78,12 @@
                 </button>
             @endif
         </div>
-        @if ($presensiToday->jam_keluar !== '-')
+        @if ($presensiToday->jam_keluar !== null)
             <div class="mt-4">
-                <!-- Disable Pulang button if current time is after jam_pulang -->
-                @if ($currentTime >= $jamKeluar)
                     <button id="btnPulang" class="btn btn-danger w-100" disabled>
                         <i class="fas fa-sign-out-alt"></i> Pulang
                     </button>
-                @else
-                    <button id="btnPulang" class="btn btn-danger w-100">
-                        <i class="fas fa-sign-out-alt"></i> Pulang
-                    </button>
-                @endif
+               
             </div>
         @else
             <div class="mt-4">
