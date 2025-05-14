@@ -46,6 +46,12 @@
                                 <label for="tgl">Tanggal</label>
                                 <input type="date" name="tgl" class="form-control" required>
                             </div>
+                            <div class="form-group">
+                                <label for="keterangan">Keterangan</label>
+                                <select name="keterangan" class="form-control" required>
+                                    <option value="Masuk">Masuk</option>
+                                    <option value="Libur">Libur</option>
+                            </div>
                             <button type="submit" class="btn btn-primary my-2">Simpan Jadwal</button>
                         </form>
                     </div>
@@ -76,6 +82,7 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Tanggal</th>
+                                        <th>Keterangan</th>
                                         <th>Dibuat</th>
                                     </tr>
                                 </thead>
@@ -84,6 +91,7 @@
                                 <tr>
                                     <td>{{ $jadwal->user->name }}</td>
                                     <td>{{ $jadwal->tgl }}</td>
+                                    <td>{{ $jadwal->keterangan }}</td>
                                     <td>{{ $jadwal->created_at->format('Y-m-d H:i') }}</td>
                                 </tr>
                                 @endforeach
@@ -125,7 +133,8 @@
             return {
                 'User ID': user.id,      // Include User ID
                 'User Name': user.name,      // Include User ID
-                'Tanggal (YYYY-MM-DD)': ''            // Include an empty field for 'Tanggal'
+                'Tanggal (YYYY-MM-DD)': '',            // Include an empty field for 'Tanggal'
+                'Keterangan (Masuk/Libur)': ''            // Include an empty field for 'Tanggal'
             };
         });
 
@@ -160,14 +169,15 @@
         const worksheet = workbook.Sheets[sheetName];
         const rawData = XLSX.utils.sheet_to_json(worksheet);
         const json = rawData.map(row => {
-            const tgl = row['Tanggal'];
+            const tgl = row['Tanggal (YYYY-MM-DD)'];
             const parsedDate = typeof tgl === 'number'
                 ? new Date((tgl - 25569) * 86400 * 1000).toISOString().split('T')[0]
                 : tgl;
 
             return {
                 user_id: row['User ID'],
-                tgl: parsedDate
+                tgl: parsedDate,
+                keterangan: row['Keterangan (Masuk/Libur)']
             };
         });
         
@@ -217,19 +227,19 @@ $("#table_data").DataTable({
             "buttons": [{
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2,3]
                     }
                 },
                 {
                     extend: 'pdfHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2,3]
                     }
                 },
                 {
                     extend: 'print',
                     exportOptions: {
-                        columns: [0, 1, 2]
+                        columns: [0, 1, 2,3]
                     }
                 }
             ]

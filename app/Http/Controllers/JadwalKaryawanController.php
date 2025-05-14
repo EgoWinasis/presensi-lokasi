@@ -27,11 +27,13 @@ class JadwalKaryawanController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'tgl' => 'required|date',
+            'keterangan' => 'required|string',
         ]);
 
         JadwalKaryawan::create([
             'user_id' => $request->user_id,
             'tgl' => $request->tgl,
+            'keterangan' => $request->keterangan,
         ]);
 
         return redirect()->back()->with('success', 'Jadwal berhasil ditambahkan');
@@ -45,6 +47,7 @@ class JadwalKaryawanController extends Controller
         \App\Models\JadwalKaryawan::create([
             'user_id' => $row['user_id'] ?? null,
             'tgl'     => $row['tgl'] ?? null,
+            'keterangan'     => $row['keterangan'] ?? null,
         ]);
     }
 
