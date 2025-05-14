@@ -131,5 +131,11 @@ Route::middleware('auth')->group(function () {
 
     });
 
+    Route::middleware(['auth', 'can:isUser'])->group(function () {
+        Route::get('jadwal-kerja', [JadwalKerjaController::class, 'index'])->name('jadwal.kerja');
+        Route::get('jadwal-kerja/data', [JadwalKerjaController::class, 'getJadwal'])->name('jadwal.kerja.data');
+    });
+    
+
     
 });

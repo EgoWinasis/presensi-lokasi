@@ -378,6 +378,12 @@ return [
             'icon' => 'fas fa-fw fa-calendar-check',
             'can'  => ['isUser'],
         ],
+        [
+            'text' => 'Jadwal Kerja',
+            'url' => 'jadwal-kerja',
+            'icon' => 'fas fa-fw fa-calendar-check',
+            'can'  => ['isUser'],
+        ],
         ['header' => 'PENGATURAN AKUN'],
         [
             'text' => 'profile',
