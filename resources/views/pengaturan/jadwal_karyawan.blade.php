@@ -51,6 +51,7 @@
                                 <select name="keterangan" class="form-control" required>
                                     <option value="Masuk">Masuk</option>
                                     <option value="Libur">Libur</option>
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-primary my-2">Simpan Jadwal</button>
                         </form>
