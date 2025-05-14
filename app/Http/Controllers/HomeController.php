@@ -30,7 +30,11 @@ class HomeController extends Controller
         $user = Auth::user();
         
         if ($user->isActive == 0) {
-            return redirect()->route('logout')->with('error', 'Akun anda tidak aktif, silahkan hubungi admin untuk mengaktifkan akun anda');
+            Auth::logout();
+    
+            return redirect()->route('login')->withErrors([
+                'email' => 'Akun belum diaktivasi.',
+            ]);
         }
            
         // Default to the current month
