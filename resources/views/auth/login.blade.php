@@ -96,10 +96,8 @@
 
     {{-- Register link --}}
     @if($registerUrl)
-        {{-- <p class="my-0">
-            <a href="{{ $registerUrl }}">
-                {{ __('adminlte::adminlte.register_a_new_membership') }}
-            </a>
-        </p> --}}
+        <p class="my-3 text-center">
+            D3 Teknik Komputer Politeknik Harapan Bersama
+        </p>
     @endif
 @stop
