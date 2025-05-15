@@ -90,7 +90,7 @@
                                 <tbody>
                                 @foreach ($jadwals as $jadwal)
                                 <tr>
-                                    <td>{{ $jadwal->user->name }}</td>
+                                    <td>{{ optional($jadwal->user)->name ?? '-' }}</td>
                                     <td>{{ $jadwal->tgl }}</td>
                                     <td>{{ $jadwal->keterangan }}</td>
                                     <td>{{ $jadwal->created_at->format('Y-m-d H:i') }}</td>
