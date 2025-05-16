@@ -97,7 +97,7 @@
     {{-- Register link --}}
     @if($registerUrl)
         <p class="my-3 text-center">
-            D3 Teknik Komputer <br> Politeknik Harapan Bersama
+            Sistem Informasi Absensi JNT Cargo <br> D3 Teknik Komputer Politeknik Harapan Bersama
         </p>
     @endif
 @stop
