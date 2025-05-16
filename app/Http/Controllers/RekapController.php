@@ -55,14 +55,14 @@ class RekapController extends Controller
      $thresholdTime = '08:30:00';
  
      // Count tepat waktu
-     $tepatWaktu = $presensi->filter(function ($item) use ($thresholdTime) {
-         return $item->jam_masuk && $item->jam_masuk <= $thresholdTime;
-     })->count();
- 
+     $tepatWaktu =  $presensi->filter(function ($item) {
+        return $item->ket_masuk === 'Tepat Waktu';
+    })->count();
      // Count terlambat
-     $terlambat = $presensi->filter(function ($item) use ($thresholdTime) {
-         return $item->jam_masuk && $item->jam_masuk > $thresholdTime;
-     })->count();
+     $telat = $presensi->filter(function ($item) {
+        return $item->ket_masuk === 'Telat';
+    })->count();
+    
 
 
     // Fetch list of users (for dropdown)
