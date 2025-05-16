@@ -59,7 +59,7 @@ class RekapController extends Controller
         return $item->ket_masuk === 'Tepat Waktu';
     })->count();
      // Count terlambat
-     $telat = $presensi->filter(function ($item) {
+     $terlambat = $presensi->filter(function ($item) {
         return $item->ket_masuk === 'Telat';
     })->count();
     
