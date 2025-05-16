@@ -117,9 +117,13 @@ public function exportPDF(Request $request)
     // Count totals
     $thresholdTime = '08:30:00';
     $totalPresensi = $presensi->count();
-    $tepatWaktu = $presensi->filter(fn($item) => $item->jam_masuk && $item->jam_masuk <= $thresholdTime)->count();
-    $terlambat = $presensi->filter(fn($item) => $item->jam_masuk && $item->jam_masuk > $thresholdTime)->count();
-
+    $tepatWaktu =  $presensi->filter(function ($item) {
+        return $item->ket_masuk === 'Tepat Waktu';
+    })->count();
+     // Count terlambat
+     $terlambat = $presensi->filter(function ($item) {
+        return $item->ket_masuk === 'Telat';
+    })->count();
     // Load view
     $html = view('rekap.rekap_pdf', compact(
         'presensi', 'month', 'startDate', 'endDate', 'totalPresensi', 'tepatWaktu', 'terlambat'
