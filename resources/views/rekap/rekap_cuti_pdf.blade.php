@@ -102,8 +102,8 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $item->user->name ?? '-' }}</td>
                     <td>{{ $item->jenis ?? '-' }}</td>
-                    <td>{{ $item->tanggal_mulai_cuti ?? '-' }}</td>
-                    <td>{{ $item->tanggal_selesai_cuti ?? '-' }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->tgl_mulai_cuti)->format('Y-m-d') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($item->tgl_selesai_cuti)->format('Y-m-d') }}</td>
                     <td>{{ $item->jumlah_hari ?? '-' }}</td>
                     <td>{{ $item->keterangan ?? '-' }}</td>
                     <td>{{ ucfirst($item->status_admin) ?? '-' }}</td>
