@@ -88,7 +88,6 @@
                 <th>Jam Keluar</th>
                 <th>Foto Keluar</th>
                 <th>Keterangan Keluar</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -115,7 +114,6 @@
                         @endif
                     </td>
                     <td>{{ $item->ket_keluar ?? '-' }}</td>
-                    <td>{{ $item->status ?? '-' }}</td>
                 </tr>
             @endforeach
         </tbody>

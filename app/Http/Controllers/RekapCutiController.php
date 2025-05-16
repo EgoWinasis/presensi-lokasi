@@ -52,7 +52,10 @@ class RekapCutiController extends Controller
     
         // Optionally count per status
         $cutiApproved = $cuti->where('status_admin', 'disetujui')->where('status_superadmin', 'disetujui')->count();
-        $cutiRejected = $cuti->where('status_admin', 'ditolak')->where('status_superadmin', 'ditolak')->count();
+        $cutiRejected = $cuti->filter(function ($item) {
+            return $item->status_admin === 'ditolak' || $item->status_superadmin === 'ditolak';
+        })->count();
+        
         $cutiPending = $cuti->where('status_admin', 'belum divalidasi')->where('status_superadmin', 'belum divalidasi')->count();
         $countIzin = $cuti->where('jenis', 'Izin')->count();
         $countCuti = $cuti->where('jenis', 'Cuti')->count();
