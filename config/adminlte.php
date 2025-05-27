@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>JNT Cargo</b>',
+    'logo' => '<b>J&T Cargo</b>',
     'logo_img' => '/img/presensi.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
