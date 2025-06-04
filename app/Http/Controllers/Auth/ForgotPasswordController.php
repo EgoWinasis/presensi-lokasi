@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
+
+    
 class ForgotPasswordController extends Controller
 {
     public function sendResetLinkEmail(Request $request)
@@ -33,5 +36,7 @@ class ForgotPasswordController extends Controller
                     ? back()->with(['status' => __($status)])
                     : back()->withErrors(['email' => __($status)]);
     }
+
+    use SendsPasswordResetEmails;
 }
 
