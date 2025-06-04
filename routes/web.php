@@ -28,7 +28,13 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+  Route::get('ubah/sandi', [PasswordController::class, 'showLinkRequestForm'])
+     ->name('ubah.sandi');
 
+    Route::post('ubah/kirim', [PasswordController::class, 'sendResetLinkEmail'])
+     ->name('ubah.kirim');
+
+     
 Route::middleware('auth')->group(function () {
     Route::resource('profile', ProfileController::class);
     Route::resource('password', PasswordController::class);
@@ -138,10 +144,6 @@ Route::middleware('auth')->group(function () {
         Route::get('jadwal-kerja/data', [JadwalKerjaController::class, 'getJadwal'])->name('jadwal.kerja.data');
     });
 
-    Route::get('ubah/sandi', [PasswordController::class, 'showLinkRequestForm'])
-     ->name('ubah.sandi');
-
-    Route::post('ubah/kirim', [PasswordController::class, 'sendResetLinkEmail'])
-     ->name('ubah.kirim');
+  
     
 });
