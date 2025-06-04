@@ -12,6 +12,7 @@ use App\Http\Controllers\RekapController;
 use App\Http\Controllers\RekapCutiController;
 use App\Http\Controllers\JadwalKaryawanController;
 use App\Http\Controllers\JadwalKerjaController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -138,5 +139,7 @@ Route::middleware('auth')->group(function () {
     });
     
 
+    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+     ->name('password.email');
     
 });
