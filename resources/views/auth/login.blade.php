@@ -88,7 +88,7 @@
     {{-- Password reset link --}}
     @if($passResetUrl)
         <p class="my-0">
-           <a href="{{ route('password.lupa') }}">
+           <a href="{{ route('ubah.sandi') }}">
                 {{ __('Lupa Password?') }}
             </a>
         </p>
