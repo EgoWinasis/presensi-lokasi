@@ -138,6 +138,8 @@ Route::middleware('auth')->group(function () {
         Route::get('jadwal-kerja/data', [JadwalKerjaController::class, 'getJadwal'])->name('jadwal.kerja.data');
     });
     
+    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
+     ->name('password.request');
 
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
      ->name('password.sendResetLinkEmail');

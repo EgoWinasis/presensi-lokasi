@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Models\User;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 
     
 class ForgotPasswordController extends Controller
 {
+
+    public function showLinkRequestForm()
+    {
+        return view('auth.passwords.email'); // Adjust if using adminlte
+    }
+    
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
