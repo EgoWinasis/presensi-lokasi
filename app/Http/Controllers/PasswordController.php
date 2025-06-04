@@ -93,7 +93,7 @@ class PasswordController extends Controller
 
      public function showLinkRequestForm()
     {
-        return view('auth.passwords.email'); // Adjust if using adminlte
+        return view('auth.passwords.lupa'); // Adjust if using adminlte
     }
     
     public function sendResetLinkEmail(Request $request)
