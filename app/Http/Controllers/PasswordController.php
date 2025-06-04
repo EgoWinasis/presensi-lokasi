@@ -94,29 +94,41 @@ class PasswordController extends Controller
     }
     
     public function sendResetLinkEmail(Request $request)
-    {
-        $request->validate(['email' => 'required|email']);
+{
+    $request->validate(['email' => 'required|email']);
 
-        // Check if user exists and is active
-        $user = User::where('email', $request->email)->first();
+    $user = User::where('email', $request->email)->first();
 
-        
-        if (! $user) {
-            return back()->withErrors(['email' => 'Email tidak ditemukan.']);
-        }
-
-        if ($user->isActive == 0) {
-            return back()->withErrors(['email' => 'Akun ini tidak aktif.']);
-        }
-
-        // Use Laravel's default reset password link logic
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+    if (! $user) {
+        return back()->withErrors(['email' => 'Email tidak ditemukan.']);
     }
+
+    if ($user->isActive == 0) {
+        return back()->withErrors(['email' => 'Akun ini tidak aktif.']);
+    }
+
+    // Generate token
+    $token = Str::random(64);
+
+    DB::table('password_resets')->updateOrInsert(
+        ['email' => $request->email],
+        [
+            'token' => bcrypt($token),
+            'created_at' => Carbon::now()
+        ]
+    );
+
+    // Build the reset link manually
+    $resetLink = url("password/reset/{$token}?email=" . urlencode($request->email));
+
+    // Send email
+    Mail::raw("Klik link berikut untuk mereset password Anda: $resetLink", function ($message) use ($request) {
+        $message->to($request->email)
+                ->subject('Reset Password TETI Presensi');
+    });
+
+    return back()->with('status', 'Link reset telah dikirim ke email Anda.');
+}
+
 
 }
