@@ -137,11 +137,11 @@ Route::middleware('auth')->group(function () {
         Route::get('jadwal-kerja', [JadwalKerjaController::class, 'index'])->name('jadwal.kerja');
         Route::get('jadwal-kerja/data', [JadwalKerjaController::class, 'getJadwal'])->name('jadwal.kerja.data');
     });
-    
-    Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
-     ->name('password.request');
 
-    Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    Route::get('password/lupa', [ForgotPasswordController::class, 'showLinkRequestForm'])
+     ->name('password.lupa');
+
+    Route::post('password/send', [ForgotPasswordController::class, 'sendResetLinkEmail'])
      ->name('password.sendResetLinkEmail');
     
 });

@@ -1,6 +1,6 @@
 @extends('adminlte::auth.auth-page', ['authType' => 'login'])
 
-@php
+{{-- @php
     $passEmailUrl = View::getSection('password_email_url') ?? config('adminlte.password_email_url', 'password/email');
 
     if (config('adminlte.use_route_url', false)) {
@@ -8,7 +8,7 @@
     } else {
         $passEmailUrl = $passEmailUrl ? url($passEmailUrl) : '';
     }
-@endphp
+@endphp --}}
 
 @section('auth_header', __('adminlte::adminlte.password_reset_message'))
 
