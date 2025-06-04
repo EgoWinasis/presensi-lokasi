@@ -19,6 +19,7 @@ class ForgotPasswordController extends Controller
         // Check if user exists and is active
         $user = User::where('email', $request->email)->first();
 
+        dd($user);
         if (! $user) {
             return back()->withErrors(['email' => 'Email tidak ditemukan.']);
         }
