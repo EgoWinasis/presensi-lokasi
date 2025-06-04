@@ -140,6 +140,6 @@ Route::middleware('auth')->group(function () {
     
 
     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-     ->name('password.email');
+     ->name('password.sendResetLinkEmail');
     
 });
